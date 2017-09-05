@@ -19,7 +19,7 @@ Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
 Version:     2.3.1
-Release:     4%{?dist}
+Release:     7%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -36,6 +36,9 @@ Patch4:      0005-Add-language-dir-constant.patch
 Patch5:      0006-Remove-hardcoded-data-in-auth.php.patch
 Patch6:      0007-modify-hard-path-in-the-menu.patch
 Patch7:      0008-another-hard-link.patch
+Patch8:      0009-correct-path-for-plugins-call-from-Web.patch
+Patch9:      0010-escape-is-my-friend.patch
+Patch10:     0011-modify-hard-link-in-profiles-function.patch
 
 BuildArch:   noarch
 BuildRoot:   %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -161,6 +164,9 @@ cd ocsreports
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 cd ..
 
 chmod -x binutils/ocs-errors
@@ -245,6 +251,19 @@ install -pm 755 binutils/ipdiscover-util.pl       %{buildroot}%{_datadir}/ocsinv
 install -pm 755 binutils/ocsinventory-injector.pl %{buildroot}%{_bindir}/ocsinventory-injector
 install -pm 755 binutils/ocsinventory-log.pl      %{buildroot}%{_bindir}/ocsinventory-log
 
+echo '
+# Patch from RPM : allow apache to serv plugins directory
+<Directory /var/lib/ocsinventory-reports/plugins>
+   <IfModule mod_authz_core.c>
+     # Apache 2.4
+     Require all granted
+   </IfModule>
+   <IfModule !mod_authz_core.c>
+     Order deny,allow
+     Allow from all
+   </IfModule>
+</Directory>
+Alias /plugins /var/lib/ocsinventory-reports/plugins' >> etc/ocsinventory/ocsinventory-reports.conf 
 
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d
 sed -e "s;OCSREPORTS_ALIAS;/ocsreports;g" \
@@ -346,6 +365,15 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
 
 %changelog
+* Mon Aug 07 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-7
+- Correct issue #275 : Hard link on profiles
+
+* Mon Jun 19 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-6
+- Syntax correction
+
+* Sat Jun 17 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-5
+- Correct plugins access
+
 * Fri Apr 21 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-4
 - Remove hardcoded link
 - Add SNMP support in ocsreports configuration

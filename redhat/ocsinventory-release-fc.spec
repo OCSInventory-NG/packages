@@ -1,17 +1,21 @@
-%global fedora 24
+%global fedora 25
 
 Name:           ocsinventory-release
+%if %{fedora} == 26
+Version:        26
+Release:        3%{?dist}
+%endif
 %if %{fedora} == 25
 Version:        25
-Release:        2%{?dist}
+Release:        3%{?dist}
 %endif
 %if %{fedora} == 24
 Version:        24
-Release:        2%{?dist}
+Release:        3%{?dist}
 %endif
 %if %{fedora} == 23
 Version:        23
-Release:        2%{?dist}
+Release:        3%{?dist}
 %endif
 Summary:        YUM configuration for OCS Inventory NG repository
 Summary(fr):    Configuration de YUM pour le dépôt OCS Inventory NG
@@ -58,6 +62,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-ocs
 
 %changelog
+* Tue Aug 8 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 23-3, 24-3, 25-3 and 26-2
+- Add Fedora 26
+
 * Sun Jun 11 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 23-2, 24-2 and 25-2
 - Correct installation bug
 
