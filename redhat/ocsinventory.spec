@@ -19,7 +19,7 @@ Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
 Version:     2.3.1
-Release:     7%{?dist}
+Release:     8%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -99,6 +99,7 @@ Requires: mod_perl
 Requires: perl(SOAP::Transport::HTTP2)
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Archive::Zip)
+Requires: perl(XML::Simple)
 # Required by the original setup script, but not detected automatically :
 # Apache::DBI drags in DBI
 Requires: perl(Apache::DBI)
@@ -365,6 +366,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
 
 %changelog
+* Wed Sep 20 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-8
+- Correct depence issue
+
 * Mon Aug 07 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-7
 - Correct issue #275 : Hard link on profiles
 
