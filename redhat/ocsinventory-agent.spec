@@ -16,15 +16,15 @@
 %global debug_package %{nil}
 
 # Official release version
-%global official_version 2.3.0
+%global official_version 2.4.0
 
 Name:      ocsinventory-agent
 Summary:   Open Computer and Software Inventory Next Generation client
 
-Version:   2.3.0
+Version:   2.4.0
 Release:   1%{?dist}%{?ocstag:.%{ocstag}}
 
-Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/Ocsinventory-Unix-Agent-%{official_version}.tar.gz
+Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/ocsinventory-unix-agent-%{official_version}.tar.gz
 
 Source1:   %{name}.logrotate
 Source2:   %{name}.cron
@@ -45,10 +45,12 @@ BuildRequires: perl(Net::IP)
 BuildRequires: perl(Digest::MD5)
 BuildRequires: perl(File::Temp)
 
-Requires:  perl-Ocsinventory-Agent = %{version}-%{release}
-Requires:  crontabs
+Requires: perl-Ocsinventory-Agent = %{version}-%{release}
+Requires: crontabs
+Requires: perl(LWP::Protocol)
+Requires: perl(Crypt::SSLeay)
 %ifarch %{ix86} x86_64 ia64
-Requires:  dmidecode
+Requires: dmidecode
 %endif
 
 Obsoletes: ocsinventory-client < %{version}
@@ -110,7 +112,7 @@ Perl libraries for %{name}
 
 
 %prep
-%setup -q -n Ocsinventory-Unix-Agent-%{version}
+%setup -q -n ocsinventory-unix-agent-%{version}
 
 sed -e 's/\r//' -i snmp/mibs/local/6876.xml
 
@@ -246,6 +248,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Feb 11 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.0-1
+- Update to 2.4.0
+
+* Mon Jan 15 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.0-2
+- Add SSL dependancies
+
 * Thu Jan 12 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.0-1
 - Update to 2.3.0
 

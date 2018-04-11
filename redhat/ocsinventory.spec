@@ -13,32 +13,21 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.3.1
+%global official_version 2.4
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.3.1
-Release:     8%{?dist}
+Version:     2.4.0
+Release:     2%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
 URL:         http://www.ocsinventory-ng.org/
 
-Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}-%{official_version}.tar.gz
+Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}_%{official_version}.tar.gz
 Source1:     ocsinventory-lang-reports.conf
-
-Patch0:      0001-Replace-hardcoded-path.patch
-Patch1:      0002-Modify-path-to-use-constant-instead-of-hardcoded-pat.patch
-Patch2:      0003-Remove-hardcoded-path-on-computer-view.patch
-Patch3:      0004-Update-header.php.patch
-Patch4:      0005-Add-language-dir-constant.patch
-Patch5:      0006-Remove-hardcoded-data-in-auth.php.patch
-Patch6:      0007-modify-hard-path-in-the-menu.patch
-Patch7:      0008-another-hard-link.patch
-Patch8:      0009-correct-path-for-plugins-call-from-Web.patch
-Patch9:      0010-escape-is-my-friend.patch
-Patch10:     0011-modify-hard-link-in-profiles-function.patch
+Source2:     ocsreports.user.ini
 
 BuildArch:   noarch
 BuildRoot:   %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -113,6 +102,11 @@ Requires(post):   /sbin/restorecon
 Requires(post):   /usr/sbin/semanage
 Requires(postun): /usr/sbin/semanage
 %endif
+%if 0%{?fedora}
+Requires: perl(Mojolicious)
+Requires: perl(Plack)
+Requires: perl(Switch)
+%endif
 
 %description server
 This package provides the Communication server, which will handle HTTP
@@ -154,21 +148,7 @@ navigateur favori.
 
 
 %prep
-%setup -q -n %{tarname}-%{version}
-
-cd ocsreports
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-cd ..
+%setup -q -n %{tarname}_%{official_version}
 
 chmod -x binutils/ocs-errors
 
@@ -186,6 +166,16 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 
 # --- ocsinventory-server --- communication server
+%if 0%{?fedora}
+    mkdir -p %{buildroot}%{perl_vendorlib}
+    cp -ar  Api %{buildroot}%{perl_vendorlib}
+    mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d
+    sed -e "s;REST_API_PATH;%{perl_vendorlib};g" \
+        -e "s;REST_API_LOADER_PATH;%{perl_vendorlib}/Api/Ocsinventory/Restapi/Loader.pm;g" \
+         etc/ocsinventory/ocsinventory-restapi.conf \
+         >%{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-restapi.conf
+%endif
+
 cd Apache
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
@@ -277,6 +267,7 @@ sed -e "s;OCSREPORTS_ALIAS;/ocsreports;g" \
     >%{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-reports.conf
 
 mv %{SOURCE1} %{buildroot}%{_sysconfdir}/httpd/conf.d/
+mv %{SOURCE2} %{buildroot}%{_datadir}/ocsinventory-reports/.user.ini
 
 %clean
 rm -rf %{buildroot}
@@ -342,11 +333,16 @@ fi
 %config(noreplace) %{_sysconfdir}/ocsinventory/ocsinventory-server/htpasswd
 %config(noreplace) %{_sysconfdir}/logrotate.d/ocsinventory-server
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-server.conf
+%if 0%{?fedora}
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-restapi.conf
+%endif
 %attr(755,apache,root) %{_localstatedir}/log/ocsinventory-server
 %{_bindir}/ocsinventory-injector
 %{_bindir}/ocsinventory-log
 %{perl_vendorlib}/Apache
-
+%if 0%{?fedora}
+	%{perl_vendorlib}/Api
+%endif
 
 %files reports
 %defattr(-, root, root, -)
@@ -366,6 +362,13 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
 
 %changelog
+* Sat Dec 30 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.0-2
+- Add user.ini to allow use php-fpm
+
+* Tue Dec 19 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.0-1
+- Update to 2.4
+- Add Rest Api on Fedora
+
 * Wed Sep 20 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.3.1-8
 - Correct depence issue
 
