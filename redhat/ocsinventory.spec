@@ -13,13 +13,13 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.4
+%global official_version 2.4.1
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.4.0
-Release:     2%{?dist}
+Version:     2.4.1
+Release:     1%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -102,11 +102,10 @@ Requires(post):   /sbin/restorecon
 Requires(post):   /usr/sbin/semanage
 Requires(postun): /usr/sbin/semanage
 %endif
-%if 0%{?fedora}
+# Needed for the API
 Requires: perl(Mojolicious)
 Requires: perl(Plack)
 Requires: perl(Switch)
-%endif
 
 %description server
 This package provides the Communication server, which will handle HTTP
@@ -166,15 +165,13 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 
 # --- ocsinventory-server --- communication server
-%if 0%{?fedora}
-    mkdir -p %{buildroot}%{perl_vendorlib}
-    cp -ar  Api %{buildroot}%{perl_vendorlib}
-    mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d
-    sed -e "s;REST_API_PATH;%{perl_vendorlib};g" \
-        -e "s;REST_API_LOADER_PATH;%{perl_vendorlib}/Api/Ocsinventory/Restapi/Loader.pm;g" \
-         etc/ocsinventory/ocsinventory-restapi.conf \
-         >%{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-restapi.conf
-%endif
+mkdir -p %{buildroot}%{perl_vendorlib}
+cp -ar  Api %{buildroot}%{perl_vendorlib}
+mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d
+sed -e "s;REST_API_PATH;%{perl_vendorlib};g" \
+    -e "s;REST_API_LOADER_PATH;%{perl_vendorlib}/Api/Ocsinventory/Restapi/Loader.pm;g" \
+     etc/ocsinventory/ocsinventory-restapi.conf \
+     >%{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-restapi.conf
 
 cd Apache
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
@@ -333,16 +330,12 @@ fi
 %config(noreplace) %{_sysconfdir}/ocsinventory/ocsinventory-server/htpasswd
 %config(noreplace) %{_sysconfdir}/logrotate.d/ocsinventory-server
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-server.conf
-%if 0%{?fedora}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-restapi.conf
-%endif
 %attr(755,apache,root) %{_localstatedir}/log/ocsinventory-server
 %{_bindir}/ocsinventory-injector
 %{_bindir}/ocsinventory-log
 %{perl_vendorlib}/Apache
-%if 0%{?fedora}
-	%{perl_vendorlib}/Api
-%endif
+%{perl_vendorlib}/Api
 
 %files reports
 %defattr(-, root, root, -)
@@ -362,6 +355,10 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
 
 %changelog
+* Wed Apr 11 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.1-1
+- Update to 2.4.1
+- Enable Rest Api on EL
+
 * Sat Dec 30 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.0-2
 - Add user.ini to allow use php-fpm
 
