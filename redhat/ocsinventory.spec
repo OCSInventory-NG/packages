@@ -1,7 +1,7 @@
 # spec file for ocsinventory
 #
 # Copyright (c) 2008-2014 Remi Collet
-# Copyright (c) 2016-2017 Philippe Beaumont
+# Copyright (c) 2016-2021 Philippe Beaumont
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/3.0/
 #
@@ -13,24 +13,26 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.4.1
+%global official_version 2.9
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.4.1
-Release:     1%{?dist}
+Version:     2.9.0
+Release:     2%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
 URL:         http://www.ocsinventory-ng.org/
 
-Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}_%{official_version}.tar.gz
+Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}-%{official_version}.tar.gz
 Source1:     ocsinventory-lang-reports.conf
 Source2:     ocsreports.user.ini
 
 BuildArch:   noarch
 BuildRoot:   %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: make
+BuildRequires: perl-macros
 BuildRequires: perl(ExtUtils::MakeMaker)
 BuildRequires: perl(Apache::DBI)
 BuildRequires: perl(DBD::mysql)
@@ -42,14 +44,7 @@ BuildRequires: perl(Archive::Zip)
 # Main package is a dummy package
 Requires:    ocsinventory-server  = %{version}-%{release}
 Requires:    ocsinventory-reports = %{version}-%{release}
-%if 0%{?rhel} >= 7
 Requires:    mariadb-server
-%else
-# mysql-compat-server not yet provided in Fedora
-# see https://bugzilla.redhat.com/1065899
-# mysql-server is provided by both mariadb and community-mysql
-Requires:    mysql-server
-%endif
 
 
 %description
@@ -120,16 +115,22 @@ de données.
 %package reports
 Group:    Applications/Internet
 Summary:  OCS Inventory NG - Communication server
-# From phpci : curl, date, dom, imap, ldap, mysql, openssl, pcre, session, xml, zlib
-Requires: php
-Requires: php-mysqli php-gd php-xml php-imap php-ldap php-mbstring php-soap
-Requires: php-pear-CAS
+# From phpci : curl, date, dom, ldap, mysql, openssl, pcre, session, xml, zlib
+Requires: php >= 7.2
+Requires: php-mysqli php-gd php-xml php-ldap php-mbstring php-soap
+Requires: php-pear-CAS php-phpmailer6
 # Required by the original setup script, but not detected automatically :
 Requires: perl(DBD::mysql)
 # Required by ipdiscover-util.pl (nmap and nmblookup)
 Requires: nmap
 # nmblookup is provided by samba or samba3x (EL-5)
 Requires: %{_bindir}/nmblookup
+# phpmailer dependancies
+Requires: php-ctype php-filter php-hash php-intl php-openssl php-pcre
+# Remi repo is needed
+%if 0%{?rhel} >= 7
+Requires: remi-release epel-release
+%endif
 %if %{useselinux}
 Requires(post):   /sbin/restorecon
 Requires(post):   /usr/sbin/semanage
@@ -147,7 +148,7 @@ navigateur favori.
 
 
 %prep
-%setup -q -n %{tarname}_%{official_version}
+%setup -q -n %{tarname}-%{official_version}
 
 chmod -x binutils/ocs-errors
 
@@ -217,11 +218,9 @@ find %{buildroot}%{_datadir}/ocsinventory-reports \
 mkdir -p %{buildroot}%{_sysconfdir}/ocsinventory/ocsinventory-reports
 
 sed -e '/CONF_MYSQL_DIR/s;ETC_DIR;"%{_sysconfdir}/ocsinventory/ocsinventory-reports";' \
-    -e '/PHPCAS/s/^.*$/define("PHPCAS", "CAS.php");/' \
     -e "/CONFIG_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
     -e "/PLUGINS_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
-    -e '/PLUGINS_DL_DIR/s;__DIR__;PLUGINS_DIR;' \
-    -e '/PLUGINS_SRV_SIDE/s;__DIR__;PLUGINS_DIR;' \
+    -e "/EXT_DL_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
     -i %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/var.php
 
 mkdir -p %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/{download,ipd,snmp,logs}
@@ -231,9 +230,7 @@ mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/config %{buildroot}%{
 
 mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/plugins %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins
 
-mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/download %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins/download
-
-mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/upload %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins/upload
+mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/extensions %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/extensions
 
 install -pm 755 binutils/ipdiscover-util.pl       %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/ipdiscover-util.pl
 install -pm 755 binutils/ocsinventory-injector.pl %{buildroot}%{_bindir}/ocsinventory-injector
@@ -346,6 +343,7 @@ fi
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-reports.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-lang-reports.conf
 %{_datadir}/ocsinventory-reports
+%attr(755,root,root)%{_datadir}/ocsinventory-reports/ocsreports/tools/cron_mailer.php
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/ipd
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/download
@@ -353,8 +351,34 @@ fi
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/logs
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/plugins
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
+%attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Mon May 31 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.9.0-2
+- remove php-imap from dependancies
+- push minimal needed php version to 7.2
+
+* Thu May 27 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.9.0-1
+- Update to 2.9.0
+
+* Fri Apr 02 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.8.1-1
+- Update to 2.8.1
+
+* Fri Sep 25 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.8.0-1
+- Update to 2.8.0
+
+* Sun Mar 29 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.7.0-1
+- Update to 2.7.0
+
+* Mon May 13 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.0-2
+- Remove external libs and put it in dependancies
+- Use Remi repo for external libs
+- Upgrade php needed version
+- Add patch for mail cron
+
+* Tue May 07 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.0-1
+- Update to 2.6.0
+
 * Wed Apr 11 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.1-1
 - Update to 2.4.1
 - Enable Rest Api on EL

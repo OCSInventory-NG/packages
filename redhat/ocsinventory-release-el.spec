@@ -1,6 +1,10 @@
-%global rhel 6
+%global rhel 8
 
 Name:           ocsinventory-release
+%if %{rhel} == 8
+Version:        8
+Release:        1%{?dist}
+%endif
 %if %{rhel} == 7
 Version:        7
 Release:        4%{?dist}
@@ -58,6 +62,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-ocs
 
 %changelog
+* Sun Mar 15 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 6-4, 7-4 and 8-1
+- Add RHEL 8
+
 * Mon Jan 23 2017 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 6-4 and 7-4
 - Correction on repo definition
 

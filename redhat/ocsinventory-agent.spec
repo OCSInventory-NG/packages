@@ -16,15 +16,15 @@
 %global debug_package %{nil}
 
 # Official release version
-%global official_version 2.4.0
+%global official_version 2.8.0
 
 Name:      ocsinventory-agent
 Summary:   Open Computer and Software Inventory Next Generation client
 
-Version:   2.4.0
+Version:   2.8.0
 Release:   1%{?dist}%{?ocstag:.%{ocstag}}
 
-Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/ocsinventory-unix-agent-%{official_version}.tar.gz
+Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/Ocsinventory-Unix-Agent-%{official_version}.tar.gz
 
 Source1:   %{name}.logrotate
 Source2:   %{name}.cron
@@ -46,16 +46,14 @@ BuildRequires: perl(Digest::MD5)
 BuildRequires: perl(File::Temp)
 
 Requires: perl-Ocsinventory-Agent = %{version}-%{release}
-Requires: crontabs
-Requires: perl(LWP::Protocol)
-Requires: perl(Crypt::SSLeay)
-%ifarch %{ix86} x86_64 ia64
-Requires: dmidecode
-%endif
+Requires: ocsinventory-agent-core = %{version}-%{release}
+Requires: perl(Net::SNMP)
+Requires: perl(Parse::EDID)
+Requires: nmap
+Requires: smartmontools
 
 Obsoletes: ocsinventory-client < %{version}
 Provides:  ocsinventory-client = %{version}-%{release}
-
 
 %description
 Open Computer and Software Inventory Next Generation is an application
@@ -83,36 +81,48 @@ de commandes ou de fichiers sur les clients Windows ou Linux.
 %package -n perl-Ocsinventory-Agent
 Summary:   Libraries %{name}
 Group:     Development/Libraries
-%if 0%{?fedora} >= 12 || 0%{?rhel} >= 6
 BuildArch: noarch
-%endif
 Requires:  perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Requires:  perl(Crypt::SSLeay)
 Requires:  perl(HTTP::Request)
 Requires:  perl(Net::IP)
 Requires:  perl(Net::Netmask)
 Requires:  perl(Net::SSLeay)
-Requires:  perl(Net::SNMP)
-Requires:  perl(Proc::Daemon)
 Requires:  perl(Data::UUID)
 Requires:  net-tools
 Requires:  pciutils
-Requires:  nmap
-Requires:  monitor-edid
 Requires:  which
-Requires:  smartmontools
+%ifarch %{ix86} x86_64 ia64
+Requires: dmidecode
+%endif
 Requires:  %{_sysconfdir}/logrotate.d
 Conflicts: %{name} < %{version}
 
 %description  -n perl-Ocsinventory-Agent
 Perl libraries for %{name}
 
+%package -n ocsinventory-agent-core
+Summary:   Open Computer and Software Inventory Next Generation client core componant
+Group:     Applications/System
+Requires: perl(XML::Simple)
+Requires: perl(LWP)
+Requires: perl(Net::IP)
+Requires: perl(Digest::MD5)
+Requires: perl(File::Temp)
+Requires: perl-Ocsinventory-Agent = %{version}-%{release}
+Requires: crontabs
+Requires: perl(LWP::Protocol)
+Requires: perl(LWP::Protocol::http)
+Requires: perl(LWP::Protocol::https)
+Requires: perl(Proc::Daemon)
+ 
+%description -n ocsinventory-agent-core
+Core of %{name}
 
 %{?perl_default_filter}
 
-
 %prep
-%setup -q -n ocsinventory-unix-agent-%{version}
+%setup -q -n Ocsinventory-Unix-Agent-%{version}
+%autopatch -p1
 
 sed -e 's/\r//' -i snmp/mibs/local/6876.xml
 
@@ -222,12 +232,6 @@ rm -rf %{buildroot}
 
 
 %files
-%defattr(-, root, root, -)
-%{_sbindir}/%{name}
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%{_sysconfdir}/cron.hourly/%{name}
-%{_mandir}/man1/%{name}*
-
 
 %files -n perl-Ocsinventory-Agent
 %defattr(-, root, root, -)
@@ -246,8 +250,41 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory/modules.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
+%files -n ocsinventory-agent-core
+%defattr(-, root, root, -)
+%{_sbindir}/%{name}
+%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_sysconfdir}/cron.hourly/%{name}
+%{_mandir}/man1/%{name}*
 
 %changelog
+* Mon Oct 05 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.8.0-1
+- Update to 2.8.0
+
+* Wed Mar 11 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.1-1
+- Update to 2.6.1
+
+* Tue Dec 31 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.0-5
+- Clean spec file
+
+* Sun Dec 29 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.0-4
+- Add fixes before 2.7
+- Upgrade to revision 4 to upgrade unofficial package from EPEL
+- Improve some dependancies
+- Prepare for rhel 8
+
+* Mon May 20 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.6.0-1
+- Update to 2.6.0
+
+* Mon Dec 31 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.2-3
+- Remove Module::Install as dependancy
+
+* Mon Dec 24 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.2-2
+- Add core agent
+
+* Tue Jul 31 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.2-1
+- Update to 2.4.2
+
 * Sun Feb 11 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.4.0-1
 - Update to 2.4.0
 

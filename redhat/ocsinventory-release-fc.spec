@@ -1,18 +1,6 @@
-%global fedora 25
-
 Name:           ocsinventory-release
-%if %{fedora} == 27
-Version:        27
-Release:        4%{?dist}
-%endif
-%if %{fedora} == 26
-Version:        26
-Release:        4%{?dist}
-%endif
-%if %{fedora} == 25
-Version:        25
-Release:        4%{?dist}
-%endif
+Version:        %{fedora}
+Release:        5%{?dist}
 Summary:        YUM configuration for OCS Inventory NG repository
 Summary(fr):    Configuration de YUM pour le dépôt OCS Inventory NG
 
@@ -23,7 +11,7 @@ Source0:        ocsinventory-fc.repo
 Source1:	RPM-GPG-KEY-ocs
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}
-BuildArchitectures: noarch
+BuildArch:	noarch
 
 Requires:       /etc/yum.repos.d
 Requires:       fedora-release >= %{fedora}
@@ -39,7 +27,7 @@ les RPM du dépôt d'OCS Inventory NG.
 
 %prep
 %setup -c -T
-sed -e "s/VERSION/%{fedora}/" %{SOURCE0} | tee ocsinventory.repo
+sed -e "s/VERSION/%{version}/" %{SOURCE0} | tee ocsinventory.repo
 
 %build
 echo empty build
@@ -58,6 +46,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-ocs
 
 %changelog
+* Tue May 14 2019 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 28-5, 29-5 and 30-5
+- Add version auto configure
+- Remove Fedora 25, 26 and 27
+
 * Mon Feb 5 2018 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 25-4, 26-4 and 27-4
 - Add Fedora 27
 - Remove Fedora 23 and 24
