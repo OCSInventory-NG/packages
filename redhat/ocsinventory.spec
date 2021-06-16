@@ -19,7 +19,7 @@ Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
 Version:     2.9.0
-Release:     2%{?dist}
+Release:     3%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -28,6 +28,10 @@ URL:         http://www.ocsinventory-ng.org/
 Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}-%{official_version}.tar.gz
 Source1:     ocsinventory-lang-reports.conf
 Source2:     ocsreports.user.ini
+
+Patch0:      0001-Fix-all-RPM-Crontab.patch
+Patch1:      0002-Make-use-of-CONF_MYSQL-instead-of-dbconfig.inc.php.patch
+
 
 BuildArch:   noarch
 BuildRoot:   %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -149,6 +153,9 @@ navigateur favori.
 
 %prep
 %setup -q -n %{tarname}-%{official_version}
+
+%patch0 -p1 -d ocsreports
+%patch1 -p1 -d ocsreports
 
 chmod -x binutils/ocs-errors
 
@@ -354,6 +361,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Wed Jun 16 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.9.0-3
+- Add patch to correct hardlink in crontab
+
 * Mon May 31 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.9.0-2
 - remove php-imap from dependancies
 - push minimal needed php version to 7.2
