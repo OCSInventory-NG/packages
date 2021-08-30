@@ -26,8 +26,7 @@ License:     GPLv2
 URL:         http://www.ocsinventory-ng.org/
 
 Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}-%{official_version}.tar.gz
-Source1:     ocsinventory-lang-reports.conf
-Source2:     ocsreports.user.ini
+Source1:     ocsreports.user.ini
 
 
 BuildArch:   noarch
@@ -289,6 +288,8 @@ restorecon -R %{_sysconfdir}/ocsinventory/ocsinventory-reports
 restorecon -R %{_localstatedir}/lib/ocsinventory-reports
 # Move plugins folder on the right folder
 mv %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/plugins
+# Remove useless conf file
+rm %{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-lang-reports.conf
 ) &>/dev/null ||:
 %endif
 
