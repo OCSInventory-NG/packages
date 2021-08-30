@@ -13,13 +13,13 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.9
+%global official_version 2.9.1
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.9.0
-Release:     3%{?dist}
+Version:     2.9.1
+Release:     1%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -28,9 +28,6 @@ URL:         http://www.ocsinventory-ng.org/
 Source0:     https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/%{official_version}/%{tarname}-%{official_version}.tar.gz
 Source1:     ocsinventory-lang-reports.conf
 Source2:     ocsreports.user.ini
-
-Patch0:      0001-Fix-all-RPM-Crontab.patch
-Patch1:      0002-Make-use-of-CONF_MYSQL-instead-of-dbconfig.inc.php.patch
 
 
 BuildArch:   noarch
@@ -154,9 +151,6 @@ navigateur favori.
 %prep
 %setup -q -n %{tarname}-%{official_version}
 
-%patch0 -p1 -d ocsreports
-%patch1 -p1 -d ocsreports
-
 chmod -x binutils/ocs-errors
 
 # remvoe Bundled libs
@@ -226,7 +220,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/ocsinventory/ocsinventory-reports
 
 sed -e '/CONF_MYSQL_DIR/s;ETC_DIR;"%{_sysconfdir}/ocsinventory/ocsinventory-reports";' \
     -e "/CONFIG_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
-    -e "/PLUGINS_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
+    -e "/PLUGINS_DIR/s;__DIR__ . ';'%{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/;" \
     -e "/EXT_DL_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
     -i %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/var.php
 
@@ -234,8 +228,6 @@ mkdir -p %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/{download,ipd,sn
 mkdir -p %{buildroot}%{_bindir}
 
 mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/config %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/config
-
-mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/plugins %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins
 
 mv %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/extensions %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/extensions
 
@@ -295,6 +287,8 @@ semanage fcontext -a -s system_u -t httpd_sys_rw_content_t -r s0 "%{_localstated
 # files created by app
 restorecon -R %{_sysconfdir}/ocsinventory/ocsinventory-reports
 restorecon -R %{_localstatedir}/lib/ocsinventory-reports
+# Move plugins folder on the right folder
+mv %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/plugins
 ) &>/dev/null ||:
 %endif
 
@@ -356,11 +350,14 @@ fi
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/download
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/snmp
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports/logs
-%attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/plugins
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/config
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Mon Aug 30 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.1-1
+- Update to 2.9.1
+- Fix wrong plugins folder path
+
 * Wed Jun 16 2021 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.9.0-3
 - Add patch to correct hardlink in crontab
 
