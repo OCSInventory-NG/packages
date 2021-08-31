@@ -286,9 +286,9 @@ semanage fcontext -a -s system_u -t httpd_sys_rw_content_t -r s0 "%{_localstated
 restorecon -R %{_sysconfdir}/ocsinventory/ocsinventory-reports
 restorecon -R %{_localstatedir}/lib/ocsinventory-reports
 # Move plugins folder on the right folder
-mv %{buildroot}%{_localstatedir}/lib/ocsinventory-reports/plugins %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/plugins
+mv %{_localstatedir}/lib/ocsinventory-reports/plugins %{_datadir}/ocsinventory-reports/ocsreports/plugins
 # Remove useless conf file
-rm %{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-lang-reports.conf
+rm %{_sysconfdir}/httpd/conf.d/ocsinventory-lang-reports.conf
 ) &>/dev/null ||:
 %endif
 
@@ -342,7 +342,6 @@ fi
 %attr(750,apache,root) %dir %{_sysconfdir}/ocsinventory/ocsinventory-reports
 %attr(640,apache,root) %config(noreplace)
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-reports.conf
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/ocsinventory-lang-reports.conf
 %{_datadir}/ocsinventory-reports
 %attr(755,root,root)%{_datadir}/ocsinventory-reports/ocsreports/tools/cron_mailer.php
 %attr(755,apache,root) %dir %{_localstatedir}/lib/ocsinventory-reports
