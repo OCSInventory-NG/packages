@@ -219,7 +219,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/ocsinventory/ocsinventory-reports
 
 sed -e '/CONF_MYSQL_DIR/s;ETC_DIR;"%{_sysconfdir}/ocsinventory/ocsinventory-reports";' \
     -e "/CONFIG_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
-    -e "/PLUGINS_DIR/s;__DIR__ . ';'%{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/;" \
+    -e "/PLUGINS_DIR/s;__DIR__ . ';'%{_datadir}/ocsinventory-reports/ocsreports;" \
     -e "/EXT_DL_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
     -i %{buildroot}%{_datadir}/ocsinventory-reports/ocsreports/var.php
 
