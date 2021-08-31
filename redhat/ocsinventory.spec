@@ -258,8 +258,7 @@ sed -e "s;OCSREPORTS_ALIAS;/ocsreports;g" \
     etc/ocsinventory/ocsinventory-reports.conf \
     >%{buildroot}%{_sysconfdir}/httpd/conf.d/ocsinventory-reports.conf
 
-mv %{SOURCE1} %{buildroot}%{_sysconfdir}/httpd/conf.d/
-mv %{SOURCE2} %{buildroot}%{_datadir}/ocsinventory-reports/.user.ini
+mv %{SOURCE1} %{buildroot}%{_datadir}/ocsinventory-reports/.user.ini
 
 %clean
 rm -rf %{buildroot}
