@@ -123,8 +123,6 @@ Requires: php-pear-CAS php-phpmailer6
 Requires: perl(DBD::mysql)
 # Required by ipdiscover-util.pl (nmap and nmblookup)
 Requires: nmap
-# nmblookup is provided by samba or samba3x (EL-5)
-Requires: %{_bindir}/nmblookup
 # phpmailer dependancies
 Requires: php-ctype php-filter php-hash php-intl php-openssl php-pcre
 # Remi repo is needed
