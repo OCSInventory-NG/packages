@@ -284,7 +284,7 @@ semanage fcontext -a -s system_u -t httpd_sys_rw_content_t -r s0 "%{_localstated
 restorecon -R %{_sysconfdir}/ocsinventory/ocsinventory-reports
 restorecon -R %{_localstatedir}/lib/ocsinventory-reports
 # Move plugins folder on the right folder
-cp -r %{_localstatedir}/lib/ocsinventory-reports/plugins %{_datadir}/ocsinventory-reports/ocsreports/plugins
+cp -r %{_localstatedir}/lib/ocsinventory-reports/plugins %{_datadir}/ocsinventory-reports/ocsreports
 ) &>/dev/null ||:
 %endif
 
