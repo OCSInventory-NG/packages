@@ -19,7 +19,7 @@ Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
 Version:     2.9.1
-Release:     1%{?dist}
+Release:     2%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -283,8 +283,6 @@ semanage fcontext -a -s system_u -t httpd_sys_rw_content_t -r s0 "%{_localstated
 # files created by app
 restorecon -R %{_sysconfdir}/ocsinventory/ocsinventory-reports
 restorecon -R %{_localstatedir}/lib/ocsinventory-reports
-# Move plugins folder on the right folder
-cp -r %{_localstatedir}/lib/ocsinventory-reports/plugins %{_datadir}/ocsinventory-reports/ocsreports
 ) &>/dev/null ||:
 %endif
 
@@ -349,6 +347,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Wed Oct 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.1-2
+- Fix bug on plugins folder
+
 * Mon Aug 30 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.1-1
 - Update to 2.9.1
 - Fix wrong plugins folder path
