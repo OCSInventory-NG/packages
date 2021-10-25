@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 
 # Official release version
-%global official_version 2.8.0
+%global official_version 2.9.0
 
 Name:      ocsinventory-agent
 Summary:   Open Computer and Software Inventory Next Generation client
 
-Version:   2.8.0
+Version:   2.9.0
 Release:   1%{?dist}%{?ocstag:.%{ocstag}}
 
 Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/Ocsinventory-Unix-Agent-%{official_version}.tar.gz
@@ -223,7 +223,7 @@ rm -rf %{buildroot}%{perl_vendorlib}/Ocsinventory/Agent/Backend/OS/Win32*
 # Only need for manual installation
 rm %{buildroot}%{perl_vendorlib}/Ocsinventory/Unix/postinst.pl
 
-# Provided by ocsinventtory-ipdiscover
+# Provided by ocsinventory-ipdiscover
 rm %{buildroot}%{_sbindir}/ipdiscover
 
 
@@ -258,6 +258,9 @@ rm -rf %{buildroot}
 %{_mandir}/man1/%{name}*
 
 %changelog
+* Mon Oct 25 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.0-1
+- Update to 2.9.0
+
 * Mon Oct 05 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.8.0-1
 - Update to 2.8.0
 
