@@ -13,13 +13,13 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.9.1
+%global official_version 2.9.2
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.9.1
-Release:     2%{?dist}
+Version:     2.9.2
+Release:     1%{?dist}
 
 Group:       Applications/Internet
 License:     GPLv2
@@ -347,6 +347,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Mon Dec 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.2-1
+- Update to 2.9.2
+
 * Wed Oct 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.1-2
 - Fix bug on plugins folder
 
