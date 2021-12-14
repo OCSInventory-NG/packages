@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 
 # Official release version
-%global official_version 2.8.0
+%global official_version 2.9.0
 
 Name:      ocsinventory-agent
 Summary:   Open Computer and Software Inventory Next Generation client
 
-Version:   2.8.0
+Version:   2.9.0
 Release:   1%{?dist}%{?ocstag:.%{ocstag}}
 
 Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/Ocsinventory-Unix-Agent-%{official_version}.tar.gz
@@ -45,20 +45,32 @@ BuildRequires: perl(Net::IP)
 BuildRequires: perl(Digest::MD5)
 BuildRequires: perl(File::Temp)
 
+Requires: perl(XML::Simple)
+Requires: perl(LWP)
+Requires: perl(Net::IP)
+Requires: perl(Digest::MD5)
+Requires: perl(File::Temp)
 Requires: perl-Ocsinventory-Agent = %{version}-%{release}
-Requires: ocsinventory-agent-core = %{version}-%{release}
-Requires: perl(Net::SNMP)
-Requires: perl(Parse::EDID)
-Requires: nmap
-Requires: smartmontools
+Requires: crontabs
+Requires: perl(LWP::Protocol)
+Requires: perl(LWP::Protocol::http)
+Requires: perl(LWP::Protocol::https)
+Requires: perl(Proc::Daemon)
+
+Recommends:Requires: perl(Net::SNMP)
+Suggests: perl(Parse::EDID)
+Suggests: nmap
+Suggests: smartmontools
 
 Obsoletes: ocsinventory-client < %{version}
+Obsoletes: ocsinventory-agent-core < %{version}
 Provides:  ocsinventory-client = %{version}-%{release}
+Obsoletes: ocsinventory-agent-core = %{version}-%{release}
 
 %description
 Open Computer and Software Inventory Next Generation is an application
 designed to help a network or system administrator keep track of computer
-configuration and software installed on the network. 
+configuration and software installed on the network.
 
 It also allows deploying software, commands or files on Windows and
 Linux client computers.
@@ -70,9 +82,9 @@ Linux client computers.
 Open Computer and Software Inventory Next Generation est une application
 destinée à aider l'administrateur système ou réseau à garder un oeil sur
 la configuration des machines du réseau et sur les logiciels qui y sont
-installés. 
+installés.
 
-Elle autorise aussi la télédiffusion (ou déploiement) de logiciels, 
+Elle autorise aussi la télédiffusion (ou déploiement) de logiciels,
 de commandes ou de fichiers sur les clients Windows ou Linux.
 
 %{name} fournit le client pour Linux (Agent Unix Unifié)
@@ -100,24 +112,6 @@ Conflicts: %{name} < %{version}
 %description  -n perl-Ocsinventory-Agent
 Perl libraries for %{name}
 
-%package -n ocsinventory-agent-core
-Summary:   Open Computer and Software Inventory Next Generation client core componant
-Group:     Applications/System
-Requires: perl(XML::Simple)
-Requires: perl(LWP)
-Requires: perl(Net::IP)
-Requires: perl(Digest::MD5)
-Requires: perl(File::Temp)
-Requires: perl-Ocsinventory-Agent = %{version}-%{release}
-Requires: crontabs
-Requires: perl(LWP::Protocol)
-Requires: perl(LWP::Protocol::http)
-Requires: perl(LWP::Protocol::https)
-Requires: perl(Proc::Daemon)
- 
-%description -n ocsinventory-agent-core
-Core of %{name}
-
 %{?perl_default_filter}
 
 %prep
@@ -127,7 +121,7 @@ Core of %{name}
 sed -e 's/\r//' -i snmp/mibs/local/6876.xml
 
 cat <<EOF >%{name}.conf
-# 
+#
 # OCS Inventory "Unix Unified Agent" Configuration File
 # used by hourly cron job
 #
@@ -147,12 +141,12 @@ OCSMODE[0]=none
 
 # can be used to override the %{name}.cfg setup.
 # OCSSERVER[0]=your.ocsserver.name
-# 
+#
 # corresponds with --local=%{_localstatedir}/lib/%{name}
 # OCSSERVER[0]=local
 %endif
 
-# Wait before inventory 
+# Wait before inventory
 OCSPAUSE[0]=100
 
 # Administrative TAG (optional, must be filed before first inventory)
@@ -160,7 +154,7 @@ OCSTAG[0]=%{?ocstag}
 EOF
 
 cat <<EOF >%{name}.cfg
-# 
+#
 # OCS Inventory "Unix Unified Agent" Configuration File
 #
 # options used by cron job overides this (see /etc/sysconfig/%{name})
@@ -232,6 +226,11 @@ rm -rf %{buildroot}
 
 
 %files
+%defattr(-, root, root, -)
+%{_sbindir}/%{name}
+%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_sysconfdir}/cron.hourly/%{name}
+%{_mandir}/man1/%{name}*
 
 %files -n perl-Ocsinventory-Agent
 %defattr(-, root, root, -)
@@ -250,14 +249,10 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory/modules.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
-%files -n ocsinventory-agent-core
-%defattr(-, root, root, -)
-%{_sbindir}/%{name}
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%{_sysconfdir}/cron.hourly/%{name}
-%{_mandir}/man1/%{name}*
-
 %changelog
+* Mon Dec 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.0-1
+- Update to 2.9.0
+
 * Mon Oct 05 2020 Philippe Beaumont <philippe.beaumont@ocsinventory-ng.org> - 2.8.0-1
 - Update to 2.8.0
 
@@ -385,7 +380,7 @@ rm -rf %{buildroot}
 
 * Thu May 14 2009 Remi Collet <Fedora@famillecollet.com> 1.0.1-3
 - define PATH in config (workaround for #500594 + tool path if needed)
- 
+
 * Fri Apr 24 2009 Remi Collet <Fedora@famillecollet.com> 1.0.1-2
 - update the README.RPM (new configuration file)
 - change from URL to only servername in config comment
@@ -440,7 +435,7 @@ rm -rf %{buildroot}
 * Sun Feb 17 2008 Remi Collet <Fedora@famillecollet.com> 0.0.8.1-0.1.20080217
 - update to 0.0.8.1 from CVS
 - change config file used
-   from /etc/ocsinventory-agent/ocsinv.conf 
+   from /etc/ocsinventory-agent/ocsinv.conf
      to /etc/ocsinventory/ocsinventory-agent.cfg
 
 * Sat Jan 26 2008 Remi Collet <Fedora@famillecollet.com> 0.0.7-1
