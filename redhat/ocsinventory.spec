@@ -13,12 +13,12 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.9.2
+%global official_version 2.10.0
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.9.2
+Version:     2.10.0
 Release:     1%{?dist}
 
 Group:       Applications/Internet
@@ -232,19 +232,6 @@ install -pm 755 binutils/ipdiscover-util.pl       %{buildroot}%{_datadir}/ocsinv
 install -pm 755 binutils/ocsinventory-injector.pl %{buildroot}%{_bindir}/ocsinventory-injector
 install -pm 755 binutils/ocsinventory-log.pl      %{buildroot}%{_bindir}/ocsinventory-log
 
-echo '
-# Patch from RPM : allow apache to serv plugins directory
-<Directory /var/lib/ocsinventory-reports/plugins>
-   <IfModule mod_authz_core.c>
-     # Apache 2.4
-     Require all granted
-   </IfModule>
-   <IfModule !mod_authz_core.c>
-     Order deny,allow
-     Allow from all
-   </IfModule>
-</Directory>
-Alias /plugins /var/lib/ocsinventory-reports/plugins' >> etc/ocsinventory/ocsinventory-reports.conf 
 
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d
 sed -e "s;OCSREPORTS_ALIAS;/ocsreports;g" \
@@ -347,6 +334,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Mon Jun 27 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.10.0-1
+- Update to 2.10.0
+
 * Mon Dec 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.2-1
 - Update to 2.9.2
 
