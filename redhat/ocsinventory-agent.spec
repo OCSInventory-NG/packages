@@ -16,13 +16,13 @@
 %global debug_package %{nil}
 
 # Official release version
-%global official_version 2.9.0
+%global official_version 2.9.3
 
 Name:      ocsinventory-agent
 Summary:   Open Computer and Software Inventory Next Generation client
 
-Version:   2.9.0
-Release:   1%{?dist}%{?ocstag:.%{ocstag}}
+Version:   2.9.3
+Release:   2%{?dist}%{?ocstag:.%{ocstag}}
 
 Source0:   https://github.com/OCSInventory-NG/UnixAgent/releases/download/%{official_version}/Ocsinventory-Unix-Agent-%{official_version}.tar.gz
 
@@ -208,7 +208,7 @@ sed -e 's;/etc/;%{_sysconfdir}/;' \
     %{SOURCE2} > %{buildroot}%{_sysconfdir}/cron.hourly/%{name}
 chmod +x %{buildroot}%{_sysconfdir}/cron.hourly/%{name}
 
-install -m 644 %{name}.cfg %{buildroot}%{_sysconfdir}/ocsinventory/%{name}.cfg
+install -m 600 %{name}.cfg %{buildroot}%{_sysconfdir}/ocsinventory/%{name}.cfg
 install -m 644 etc/ocsinventory-agent/modules.conf %{buildroot}%{_sysconfdir}/ocsinventory/modules.conf
 
 # Remove some unusefull files (which brings unresolvable deps)
@@ -223,6 +223,9 @@ rm %{buildroot}%{_sbindir}/ipdiscover
 
 %clean
 rm -rf %{buildroot}
+
+%post
+chmod 600 %{_sysconfdir}/ocsinventory/%{name}.cfg
 
 
 %files
@@ -250,6 +253,15 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
 %changelog
+* Mon Jul 18 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.3-2
+- Remove read right of standard user on ocsinventory-agent.cfg
+
+* Mon Jun 27 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.3-1
+- Update to 2.9.3
+
+* Wed Jan 26 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.1-1
+- Update to 2.9.1
+
 * Mon Dec 13 2021 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.9.0-1
 - Update to 2.9.0
 
