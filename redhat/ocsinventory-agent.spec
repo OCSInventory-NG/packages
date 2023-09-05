@@ -142,6 +142,9 @@ OCSMODE[0]=none
 # can be used to override the %{name}.cfg setup.
 # OCSSERVER[0]=your.ocsserver.name
 #
+#can be used to disable HTTPS cert check.
+# OCSSSL[0]=0
+#
 # corresponds with --local=%{_localstatedir}/lib/%{name}
 # OCSSERVER[0]=local
 %endif
