@@ -13,12 +13,12 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.10.0
+%global official_version 2.12.0
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.10.0
+Version:     2.12.0
 Release:     1%{?dist}
 
 Group:       Applications/Internet
@@ -38,7 +38,6 @@ BuildRequires: perl(Apache::DBI)
 BuildRequires: perl(DBD::mysql)
 BuildRequires: perl(Net::IP)
 BuildRequires: perl(XML::Simple)
-BuildRequires: perl(SOAP::Lite)
 BuildRequires: perl(Archive::Zip)
 
 # Main package is a dummy package
@@ -90,7 +89,6 @@ Requires: perl(Apache::DBI)
 Requires: perl(Net::IP)
 Requires: perl(DBD::mysql)
 # Optional, not detected automatically :
-Requires: perl(SOAP::Lite)
 Requires: perl(XML::Entities)
 %if %{useselinux}
 Requires(post):   /sbin/restorecon
@@ -302,7 +300,6 @@ fi
 %defattr(-, root, root, -)
 %doc LICENSE README.md Apache/Changes
 %doc binutils/*.README
-%doc binutils/{ocs-errors,soap-client.pl}
 %dir %{_sysconfdir}/ocsinventory/ocsinventory-server
 %dir %{_sysconfdir}/ocsinventory/ocsinventory-server/plugins
 %dir %{_sysconfdir}/ocsinventory/ocsinventory-server/perl
@@ -334,6 +331,15 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Wed Jul 12 2023 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.12.0-1
+- Update to 2.12.0
+
+* Tue Oct 25 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.11.1-1
+- Update to 2.11.1
+
+* Mon Oct 17 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.11.0-1
+- Update to 2.11.0
+
 * Mon Jun 27 2022 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.10.0-1
 - Update to 2.10.0
 
