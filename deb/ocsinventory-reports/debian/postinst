@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+a2enconf ocsinventory-reports.conf
+
+systemctl start mariadb
+
+if mysqlshow ocsweb ; then
+    echo "Nothing to update"
+else 
+    mysql --execute="CREATE DATABASE ocsweb; CREATE USER 'ocs'@'localhost' IDENTIFIED BY 'ocspassword'; GRANT ALL PRIVILEGES ON ocsweb.* TO 'ocs'@'localhost';"
+
+    mysql ocsweb < /usr/share/ocsinventory-reports/ocsreports/files/ocsbase.sql
+fi
+
+chown -R www-data: /etc/ocsinventory-reports
+chown -R www-data: /usr/share/ocsinventory-reports/ocsreports
+
+systemctl restart apache2
+exit 0

@@ -1,0 +1,104 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+tarname = OCSNG_UNIX_SERVER
+official_version = 2.12.1
+PERL = /usr/bin/perl -Iinc
+_tmppath = /tmp
+name = ocsinventory-server
+buildRoot = debian/$(name)
+perl_vendorlib = $(_datadir)/perl5
+_sysconfdir = /etc
+_localstatedir = /var
+_datadir = /usr/share
+_datalocaldir = /usr/local/share
+_bindir = /usr/bin
+NOECHO = @
+NOOP = $(TRUE)
+TRUE = true
+INSTALLDIRS = vendor
+
+prep :
+	%setup -q -n $(tarname)-$(official_version)
+
+	chmod -x binutils/ocs-errors
+
+	# remvoe Bundled libs
+	rm -rf ocsreports/backend/require/lib
+
+pure_install :
+	$(NOECHO) $(NOOP)
+
+build :
+	cd Apache; $(PERL) Makefile.PL INSTALLDIRS=vendor; make Makefile
+
+binary : 
+	rm -rf $(buildRoot);
+
+	# --- ocsinventory-server --- communication server
+
+	cd Apache; make pure_install PERL_INSTALL_ROOT=../$(buildRoot); find ../$(buildRoot) -type f -name .packlist -exec rm -f {} ';'; find ../$(buildRoot) -type d -depth -exec rmdir {} 2>/dev/null ';'; chmod -R u+rwX,go+rX,go-w ../$(buildRoot)/*; find ../$(buildRoot)$(perl_vendorlib)/Apache -name \*.pm -exec chmod -x {} \;; rm -f ../$(buildRoot)$(perl_vendorlib)/Apache/Ocsinventory/Server/Modperl1.pm
+
+	mkdir -p $(buildRoot)$(_localstatedir)/log/ocsinventory-server
+
+	mkdir -p $(buildRoot)$(_bindir)
+
+	mkdir -p $(buildRoot)$(_sysconfdir)/logrotate.d
+	sed -e 's;PATH_TO_LOG_DIRECTORY;$(_localstatedir)/log/ocsinventory-server;' \
+	./etc/logrotate.d/ocsinventory-server >$(buildRoot)$(_sysconfdir)/logrotate.d/ocsinventory-server
+
+	# default configuration (localhost) should work on "simple" installation
+	mkdir -p $(buildRoot)$(_sysconfdir)/apache2/conf-available
+	sed -e "s;DATABASE_SERVER;localhost;g" \
+		-e "s;DATABASE_PORT;3306;g" \
+		-e "s;VERSION_MP;2;g" \
+		-e "s;PATH_TO_LOG_DIRECTORY;$(_localstatedir)/log/ocsinventory-server;g" \
+		-e "s;APACHE_AUTH_USER_FILE;$(_sysconfdir)ocsinventory-server/htpasswd;g" \
+		-e "s;PATH_TO_PLUGINS_CONFIG_DIRECTORY;$(_sysconfdir)/ocsinventory-server/plugins;" \
+		-e "s;PATH_TO_PLUGINS_PERL_DIRECTORY;$(_sysconfdir)/ocsinventory-server/perl;" \
+		etc/ocsinventory/ocsinventory-server.conf \
+		>$(buildRoot)$(_sysconfdir)/apache2/conf-available/z-ocsinventory-server.conf
+
+	mkdir -p $(buildRoot)$(_sysconfdir)/ocsinventory-server/plugins
+	mkdir -p $(buildRoot)$(_sysconfdir)/ocsinventory-server/perl
+	touch    $(buildRoot)$(_sysconfdir)/ocsinventory-server/htpasswd
+
+	install -pm 755 binutils/ocsinventory-injector.pl $(buildRoot)$(_bindir)/ocsinventory-injector
+	install -pm 755 binutils/ocsinventory-log.pl      $(buildRoot)$(_bindir)/ocsinventory-log
+
+	# --- ocsinventory-server --- rest-api
+	mkdir -p $(buildRoot)$(perl_vendorlib)
+	cp -ar  Api $(buildRoot)$(perl_vendorlib)
+	mkdir -p $(buildRoot)$(_sysconfdir)/apache2/conf-available
+	sed -e "s;REST_API_PATH;$(perl_vendorlib);g" \
+		-e "s;REST_API_LOADER_PATH;$(perl_vendorlib)/Api/Ocsinventory/Restapi/Loader.pm;g" \
+		etc/ocsinventory/ocsinventory-restapi.conf \
+		>$(buildRoot)$(_sysconfdir)/apache2/conf-available/zz-ocsinventory-restapi.conf
+
+	dh_bugfiles
+	dh_lintian
+	dh_gconf
+	dh_icons
+	dh_perl
+	#dh_usrlocal
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_strip
+	dh_makeshlibs
+	#dh_shlibdeps
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+clean :
+	rm -rf $(buildRoot)
