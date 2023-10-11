@@ -1,0 +1,19 @@
+Source: ocsinventory-agent
+Section: ocsinventory
+Priority: main
+Maintainer: Gilles Dubois <gilles.dubois@factorfx.com>
+Build-Depends: debhelper (>= 7.0.50~)
+Homepage: https://www.ocsinventory-ng.org/
+
+Package: ocsinventory-agent
+Architecture: all
+Recommends: dmidecode, hdparm, pciutils
+Suggests: nmap, smartmontools, read-edid
+Depends: debconf (>= 0.5) | debconf-2.0, perl, po-debconf, ucf, libxml-simple-perl, libnet-ip-perl, perl (>= 5.14) | libcompress-zlib-perl, libwww-perl, libnet-ssleay-perl, libproc-daemon-perl
+Description: Hardware and software inventory tool (client)
+ Open Computer and Software Inventory Next Generation is an
+ application designed to help a network or system administrator to
+ keep track of the hardware and software configurations of computers
+ that are installed on the network.  It also allows deploying
+ software, scripts and files on client computers.
+ . This package contains the client part.

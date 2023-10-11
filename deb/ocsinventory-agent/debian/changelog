@@ -1,0 +1,114 @@
+ocsinventory-agent (2:2.10.0) bullseye; urgency=medium
+
+    * Fix ips not being retrieved if belonging to the same network interface
+    * Fix accented characters being wrongly encoded
+    * Fix non utf-8 setting TAG in command line option
+    * Refactor DMIDecode bios module
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Tue, 27 Oct 2022 10:09:10 +0200
+
+ocsinventory-agent (2:2.9.3) bullseye; urgency=medium
+
+    * retrieve OS install date
+    * add sample logrotate for cron jobs
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Tue, 28 Jun 2022 14:49:10 +0200
+
+ocsinventory-agent (2:2.9.1) bullseye; urgency=medium
+
+    * Copy cronjob script from Fedora
+    * Permit storing CA list in config dir
+    * Don't check XML if in forced mode
+    * Prevent misunderstanding of version option from config file
+    * Remove forbidden char in XML
+    * Fix Agent 2.9.0 not reporting OS minor release on Debian
+    * Fix addInput missing keys
+    * Fix SNMP macadress format
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Wed, 26 Jan 2022 15:58:21 +0200
+
+ocsinventory-agent (2:2.9.0) bullseye; urgency=medium
+
+    * Adding new Screen Manufacturer
+    * Update OSRelease.pm
+    * Change product name for Lenovo systems
+    * Small improvements in the parse of config file options
+    * Checking if XML is valid before submitting
+    * Fix Unix user inventory
+    * Fix raspberry has no serial
+    * Fix timeout from last command
+    * Fix memory issue on MacOS
+    * Fix empty value for ip address when contains 127
+    * Fix IpDiscover compilation
+    * Fix lshw storage discovery fails on servers with one device
+    * Fix bug group members displaying as HASH
+    * Fix the bad management of the inventor in RHEL
+    * Fix gateway misbehaviour with multiple network interfaces
+    * Fix XML has not well formed
+    * Fix issue Ubuntu 21.10 being reported as Ubuntu 11.0
+    * Remove devtmpfs partition inventory
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Wed, 15 Dec 2021 10:17:21 +0200
+
+ocsinventory-agent (2:2.8.1) buster; urgency=medium
+
+    * Add octectstring management on SNMP Scan
+    * Add retry and timeout config for SNMP
+    * Fix perl warnings on HASH
+    * Fix warning on SNMP Scanner
+    * Fix digit retrival using bigger digit and avoid truncate
+    * Remove old SNMP scanning feature
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Wed, 16 Dec 2020 10:30:21 +0200
+
+ocsinventory-agent (2:2.8) buster; urgency=medium
+
+    * Rework SNMP scanning feature along side with the new server implementation
+    * Rework Nvidia GPU inventory
+    * Add last connected user inventory
+    * Add appimage software inventory
+    * Add flatpak software inventory
+    * Add domain user inventory
+    * Add network cards speed into inventory
+    * Add shared printers inventory
+    * Add snap software inventory
+    * Add power devices support
+    * Improve OS inventory to match Windows Agent naming convention
+    * Improve MacOS applications inventory
+    * Improve disk information inventory
+    * Improve docker container inventory
+    * Improve CPU information inventory
+    * Improve network cards inventory on BSD systems
+    * Improve OS detection on Debian (using debian_version)
+    * Improve repository inventory on RHEL/CentOS
+    * Fix bug on ipdhcp for RHEL 8 / CentOS 8
+    * Fix proxy not working with HTTPS inventory
+    * Fix an error when installing the agent with user / password auth
+    * Remove Crypt::SSLeay dependency
+    * Remove warnings
+    * Typos fix
+    * Minor bug fix 
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Mon, 20 Sep 2020 09:35:85 +0200
+
+ocsinventory-agent (2:2.6.1) buster; urgency=medium
+
+    * Allow encode http password in base64
+    * Fix repository inventory #254
+    * MacOS installer / packaging rework
+    * Suppress error message for LSPCI
+    * Fix oracle package setup
+    * Remove uninitialized value message
+    * Now use os-release file
+    * Improve drives management (Linux / MacOS)
+    * Improve IPv6 inventory
+
+ -- Charly Gregoire <charly.gregoire@corp.ovh.com>  Mon, 08 Jun 2020 15:46:47 +0200
+
+ocsinventory-agent (2:2.6.0) buster; urgency=medium
+
+    * Fix issue Service-Pack wrong info on Linux Clients (reports on https://github.com/OCSInventory-NG/OCSInventory-ocsreports/issues/741)
+    * Fix issues #181, #187, #194, #197
+    * Merge PR #175, #178, #190, #191, #193, #196, #199, #201
+
+ -- Charly Gregoire <charly.gregoire@corp.ovh.com>  Fri, 08 Nov 2019 13:41:51 +0100
