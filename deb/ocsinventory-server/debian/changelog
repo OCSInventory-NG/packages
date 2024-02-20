@@ -1,0 +1,38 @@
+ocsinventory-server (2:2.12.1) bullseye; urgency=medium
+
+    * Update to 2.12.1
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Mon, 2 Oct 2023 15:12:10 +0200
+
+
+ocsinventory-server (2:2.12.0) bullseye; urgency=medium
+
+    * Update to 2.12
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Wed, 12 Jul 2023 16:32:10 +0200
+
+ocsinventory-server (2:2.11.1) bullseye; urgency=medium
+
+    * Fix rename column syntax not supported by MySQL < 8 and MariaDB < 10.5.2
+    * Fix multisearch with is null operator
+    * Fix user display page
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Tue, 25 Oct 2022 10:50:10 +0200
+
+ocsinventory-server (2:2.10.0) bullseye; urgency=medium
+
+    * Improve compare server version and user agent version
+    * Fix software category inventory
+    * Force update BIOS datas
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Tue, 28 Jun 2022 14:49:10 +0200
+
+ocsinventory-server (2:2.9.2-1) bullseye; urgency=medium
+
+    * Improve SNMP feature
+    * Improve SNMP v3
+    * Improve Duplicate error log
+    * Update IpDiscover util
+    * Fix API JSON format
+
+ -- RudyPc <rudypc@rudypc-Vostro-5402>  Fri, 07 Jan 2022 15:07:05 +0100

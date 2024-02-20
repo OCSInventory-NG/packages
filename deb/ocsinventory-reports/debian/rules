@@ -1,0 +1,134 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+tarname = OCSNG_REPORTS
+official_version = 2.12.1
+PERL = /usr/bin/perl -Iinc
+_tmppath = /tmp
+name = ocsinventory-reports
+buildRoot = debian/$(name)
+perl_vendorlib = $(_datadir)/perl5
+_sysconfdir = /etc
+_localstatedir = /var
+_datadir = /usr/share
+_datalocaldir = /usr/local/share
+_bindir = /usr/bin
+NOECHO = @
+NOOP = $(TRUE)
+TRUE = true
+INSTALLDIRS = vendor
+
+define CONF_OCSREPORTS
+	<Directory /var/lib/ocsinventory-reports/plugins>
+	<IfModule mod_authz_core.c>
+		# Apache 2.4
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order deny,allow
+		Allow from all
+	</IfModule>
+	</Directory>
+	Alias /plugins /var/lib/ocsinventory-reports/plugins
+endef
+
+define DBCONFIG
+<?php\n\
+	define(\"DB_NAME\", \"ocsweb\");\n\
+	define(\"SERVER_READ\",\"localhost\");\n\
+	define(\"SERVER_WRITE\",\"localhost\");\n\
+	define(\"SERVER_PORT\",\"3306\");\n\
+	define(\"COMPTE_BASE\",\"ocs\");\n\
+	define(\"PSWD_BASE\",\"ocspassword\");\n\
+	define(\"ENABLE_SSL\",\"\");\n\
+	define(\"SSL_MODE\",\"\");\n\
+	define(\"SSL_KEY\",\"\");\n\
+	define(\"SSL_CERT\",\"\");\n\
+	define(\"CA_CERT\",\"\");\n\
+	?>
+endef
+
+prep :
+	%setup -q -n $(tarname)-$(official_version)
+
+	chmod -x binutils/ocs-errors
+
+	# remvoe Bundled libs
+	rm -rf ocsreports/backend/require/lib
+
+pure_install :
+	$(NOECHO) $(NOOP)
+
+build :
+	$(NOECHO) $(NOOP)
+
+binary : 
+	rm -rf $(buildRoot);
+
+	# --- ocsinventory-reports --- administration console
+
+	mkdir -p $(buildRoot)$(_datadir)/ocsinventory-reports/ocsreports
+	rsync -av --progress ./ $(buildRoot)$(_datadir)/ocsinventory-reports/ocsreports --exclude debian --exclude etc
+	find $(buildRoot)$(_datadir)/ocsinventory-reports \
+		-type f -exec chmod -x {} \;
+
+	mkdir -p $(buildRoot)$(_sysconfdir)/ocsinventory-reports
+
+	sed -e '/CONF_MYSQL_DIR/s;ETC_DIR;"$(_sysconfdir)/ocsinventory-reports";' \
+		-e "/CONFIG_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
+		-e "/PLUGINS_DIR/s;__DIR__ . ';'$(_datadir)/ocsinventory-reports/ocsreports;" \
+		-e "/EXT_DL_DIR/s;__DIR__ . ';'/var/lib/ocsinventory-reports;" \
+		-i $(buildRoot)$(_datadir)/ocsinventory-reports/ocsreports/var.php
+
+	mkdir -p $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/download
+	mkdir -p $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/ipd
+	mkdir -p $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/snmp
+	mkdir -p $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/logs
+
+	mv $(buildRoot)$(_datadir)/ocsinventory-reports/ocsreports/config $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/config
+
+	mv $(buildRoot)$(_datadir)/ocsinventory-reports/ocsreports/extensions $(buildRoot)$(_localstatedir)/lib/ocsinventory-reports/extensions
+
+	echo "$$CONF_OCSREPORTS" >> etc/ocsinventory-reports.conf
+
+	touch $(buildRoot)$(_sysconfdir)/ocsinventory-reports/dbconfig.inc.php
+
+	echo "${DBCONFIG}" >> $(buildRoot)$(_sysconfdir)/ocsinventory-reports/dbconfig.inc.php
+
+	mkdir -p $(buildRoot)$(_sysconfdir)/apache2/conf-available
+	sed -e "s;OCSREPORTS_ALIAS;/ocsreports;g" \
+		-e "s;PATH_TO_OCSREPORTS_DIR;$(_datadir)/ocsinventory-reports/ocsreports;g" \
+		-e "s;PACKAGES_ALIAS;/download;g" \
+		-e "s;PATH_TO_PACKAGES_DIR;$(_localstatedir)/lib/ocsinventory-reports/download;g" \
+		-e "s;PATH_TO_SNMP_DIR;$(_localstatedir)/lib/ocsinventory-reports/snmp;g" \
+		-e "s;SNMP_ALIAS;/snmp;g" \
+		etc/ocsinventory/ocsinventory-reports.conf \
+		>$(buildRoot)$(_sysconfdir)/apache2/conf-available/ocsinventory-reports.conf
+
+	dh_bugfiles
+	dh_lintian
+	dh_gconf
+	dh_icons
+	dh_perl
+	#dh_usrlocal
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_strip
+	dh_makeshlibs
+	#dh_shlibdeps
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+clean :
+	rm -rf $(buildRoot)
