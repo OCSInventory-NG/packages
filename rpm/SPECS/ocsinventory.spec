@@ -13,12 +13,12 @@
 %global tarname OCSNG_UNIX_SERVER
 
 # Use Official release version
-%global official_version 2.12.1
+%global official_version 2.12.2
 
 Name:        ocsinventory
 Summary:     Open Computer and Software Inventory Next Generation
 
-Version:     2.12.1
+Version:     2.12.2
 Release:     1%{?dist}
 
 Group:       Applications/Internet
@@ -331,6 +331,9 @@ fi
 %attr(755,apache,root) %{_localstatedir}/lib/ocsinventory-reports/extensions
 
 %changelog
+* Tue Jul 02 2024 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.12.2-1
+- Update to 2.12.2
+
 * Mon Sep 25 2023 Charlene Auger <charlene.auger@ocsinventory-ng.org> - 2.12.1-1
 - Update to 2.12.1
 

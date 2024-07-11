@@ -1,3 +1,9 @@
+ocsinventory-reports (2:2.12.2) bullseye; urgency=medium
+
+    * Update to 2.12.2
+
+ -- Gilles Dubois <gilles.dubois@factorfx.com>  Tue, 2 Jul 2024 10:37:10 +0200
+
 ocsinventory-reports (2:2.12.1) bullseye; urgency=medium
 
     * Update to 2.12.1
