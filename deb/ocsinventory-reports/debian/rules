@@ -10,7 +10,7 @@
 #export DH_VERBOSE=1
 
 tarname = OCSNG_REPORTS
-official_version = 2.12.2
+official_version = 2.12.3
 PERL = /usr/bin/perl -Iinc
 _tmppath = /tmp
 name = ocsinventory-reports
