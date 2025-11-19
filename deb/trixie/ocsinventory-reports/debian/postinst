@@ -15,6 +15,7 @@ fi
 
 chown -R www-data: /etc/ocsinventory-reports
 chown -R www-data: /usr/share/ocsinventory-reports/ocsreports
+chown -R www-data: /var/lib/ocsinventory-reports
 
 systemctl restart apache2
 exit 0
