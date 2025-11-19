@@ -1,0 +1,536 @@
+/*
+ * Copyright 2005-2016 OCSInventory-NG/OCSInventory-ocsreports contributors.
+ * See the Contributors file for more details about them.
+ *
+ * This file is part of OCSInventory-NG/OCSInventory-ocsreports.
+ *
+ * OCSInventory-NG/OCSInventory-ocsreports is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * OCSInventory-NG/OCSInventory-ocsreports is distributed in the hope that it
+ * will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OCSInventory-NG/OCSInventory-ocsreports. if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ */
+@media ( min-width : 768px) {
+    .dropdown-submenu {
+        position: relative;
+    }
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
+    .dropdown-submenu>a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #cccccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+    .dropdown-submenu:hover>a:after {
+        border-left-color: #ffffff;
+    }
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+    .dropdown-submenu.pull-left>.dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+}
+
+@media (max-width: 960px) {
+    .affix {
+      position: static;
+      margin-top:10px;
+      width:240px;
+    }
+}
+
+.glyphicon-trash{
+    color: gray;
+    font-size: x-large;
+}
+.alert{
+    width : 80%;
+}
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
+    background-image: none !important;
+}
+.dropdown-menu{
+    border-radius: 0 !important;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a{
+    background-image: none !important;
+    box-shadow: none !important;
+}
+.btn-success,  .btn-danger{
+    border: none !important;
+    background-image: none !important;
+}
+
+#btn-logon{
+    background-color: #961b7e;
+}
+
+.input-group{
+    width: 100% !important;
+}
+
+.alert{
+    background-image: none;
+    border: none;
+    font-size: larger;
+    text-align: center;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+	background-color: #961b7e;
+}
+
+.nav-pills>li.archive>a, .nav-pills>li.archive>a:focus, .nav-pills>li.archive>a:hover{
+	background-color: #20222e !important;
+}
+
+.navbar-left li a{
+    color: #777;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #777;
+}
+
+font {
+    font-size: small;
+}
+
+/*
+Open menus on mouse hover
+*/
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.text-success{
+    color: #5cb85c;
+    font-weight: bold;
+}
+
+.btn-default {
+    text-shadow: none;
+
+    background: #e0e0e0;
+    filter: none;
+
+    border: none !important;
+    background-image: none !important;
+
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.btn-default:hover{
+    background: #e0e0e0;
+    border: none;
+}
+
+input[type=checkbox], input[type=radio] {
+    margin: 4px 4px 0;
+}
+
+table.dataTable .glyphicon-stats {
+    color: #337ab7  !important;
+    font-weight: bold;
+    font-size: small;
+}
+
+table.dataTable .glyphicon-remove {
+    color:#C12E2A  !important;
+    font-weight: bold;
+    font-size: small;
+}
+
+table.dataTable .glyphicon-ok {
+    color:#5cb85c  !important;
+    font-weight: bold;
+    font-size: small;
+}
+
+table.dataTable .glyphicon-download-alt {
+    color:#6c757d  !important;
+    font-weight: bold;
+    font-size: small;
+}
+
+table.dataTable a {
+    color: #961b7e  !important;
+    font-weight: bold;
+}
+
+table.archive a {
+    color: #20222e  !important;
+    font-weight: bold;
+}
+
+.table-striped > tbody > tr:hover > td {
+    background-color: #e2e2e2;
+}
+
+.pagination > li > span {
+    color: #961b7e;
+}
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+        background-color: #961b7e;
+        border-color: #961b7e;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color:  #71145F;
+}
+
+.btn-info.disabled,
+.btn-info.disabled.active,
+.btn-info.disabled.focus,
+.btn-info.disabled:active,
+.btn-info.disabled:focus,
+.btn-info.disabled:hover,
+.btn-info,
+.btn-info.active,
+.btn-info.focus,
+.btn-info:active,
+.btn-info:focus,
+.btn-info:hover {
+    background: #961b7e;
+    background-color: #961b7e;
+    background-image: none;
+    border-color: #961b7e;
+}
+
+.panel {
+    background: transparent;
+    background-color:#efefef;
+}
+
+a {
+    color: #961b7e;
+}
+
+div.progress {
+    margin-bottom: 0;
+    margin-right : 3px;
+}
+
+.panel-heading {
+  background: #a7a7a7;
+  background-color:#a7a7a7;
+  color: white;
+}
+
+.soft-table {
+  border-bottom:1pt solid #dddddd;
+}
+
+.soft-table-td {
+  width: 50%;
+  padding-left: 100px;
+  padding-top : 10px;
+  padding-bottom : 10px;
+}
+
+/* The sidepanel menu */
+.sidepanel {
+    height: 100%; /* Specify a height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #F6F9FF; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+}
+
+/* The sidepanel links */
+.sidepanel a {
+    padding: 8px 8px 8px 0px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #961b7e;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+    color: #df53c3;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 16px;
+    font-size: 25px;
+    margin-left: 60px;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .returnbtn {
+    position: absolute;
+    top: 0;
+    left: 16px;
+    font-size: 25px;
+    margin-right: 60px;
+}
+
+.sidepanel p {
+    color: #818181;
+    font-size: 16px;
+    text-align:left;
+}
+
+.sidepanel .aside {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.panel-modify {
+    background: transparent;
+    background-color:#f2dede;
+    padding-top: 5px;
+}
+
+.btn-action{
+    background-color: #961b7e;
+    color: white;
+}
+
+.background-pic{
+    opacity: 0.5;
+}
+
+.card_deploy {
+    /* Add shadows to create the "card" effect */
+    transition: 0.3s;
+    border-radius: 5px;
+    background-color: #EAECEE;
+    margin-bottom: 20px;
+}
+  
+/* On mouse-over, add a deeper shadow */
+.card_deploy:hover {
+    background-color: rgb(32,34,46,0.2);
+}
+
+/* Add some padding inside the card container */
+.container_deploy {
+    padding: 2px 16px;
+}
+
+.ocs-disabled {
+    background-color: #F8F9F9;
+}
+
+.nav-pills-ocs>li.active>a, 
+.nav-pills-ocs>li.active>a:focus, 
+.nav-pills-ocs>li.active>a:hover {
+    background-color: #20222e!important;
+    border-radius: 0;
+}
+
+.nav-pills-ocs li.active.triangle a::after { 
+    content: ""; 
+    display: block; 
+    width: 0; 
+    height: 0;
+    bottom: 0;
+    border-top: 17px solid transparent; /* Go big on the size, and let overflow hide */
+    border-bottom: 20px solid transparent;
+    border-left: 30px solid rgb(32,34,46);
+    border-radius: 5% 5% 5% 5%;
+    position: absolute;
+    left: 99.9%;
+    z-index: 2;
+}
+
+.container_deploy>a {
+    text-decoration: none;
+    color: #20222e;
+    font-size: 16px;
+    display: block;
+}
+
+.container_deploy>a>h4 {
+    font-size: 16px!important;
+}
+
+.radius-parent>li.radius-left>a, 
+.radius-parent>li.radius-left>a:focus, 
+.radius-parent>li.radius-left>a:hover {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.radius-parent>li.radius-right>a, 
+.radius-parent>li.radius-right>a:focus, 
+.radius-parent>li.radius-right>a:hover {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.panel-body-ocs-deploy {
+    background-color: #EAECEE;
+    border-top: none!important;
+}
+
+.panel-default-ocs-deploy {
+    border: none;
+}
+
+.panel-heading-ocs-deploy {
+    padding: 0;
+}
+
+.panel-default>.panel-heading-ocs-deploy {
+    background-color: rgb(32,34,46,0.1);
+    background-image: none;
+}
+
+.panel-default>.panel-heading-ocs-deploy:hover {
+    background-color: rgb(32,34,46,0.2);
+    background-image: none;
+}
+
+.panel-title>a {
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 6%;
+    height: 55.2px;
+    width: 340px;
+}
+
+.panel-group .panel {
+    margin-top: 5px;
+}
+
+.nav-ocs-deploy {
+    margin-bottom:50px;
+    margin-top:50px;
+}
+
+.editor {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.editor__body {
+	width: 100%;
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	background: #eee;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+
+.editor__code {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+  
+.panel-heading-duplicate {
+    background: #cccccc;
+    background-color:#cccccc;
+    color: white;
+    height: 40px;
+}
+
+.duplicate-info {
+    text-align: left;
+    padding-left: 70px;
+}
+
+.duplicate-collapse {
+    display: inline-block;
+    width: 100%;
+}
+
+/**************************/
+/******* LOGIN PAGE *******/
+/**************************/
+
+.login-page-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/*.login-username-input, .login-password-input {
+    Customize username and password login input 
+}*/
+
+/*.login-btn {
+    Customize login button
+}*/
+
+.profile-img {
+    width: auto;
+    height: 256px;
+    margin: 0 auto 10px;
+    display: block;
+}
+

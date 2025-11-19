@@ -1,0 +1,794 @@
+Revision history for ocsreports
+2.12.3
+		* Updated translations
+		* Fix 500 error on logout
+		* Security fix on systemids
+		* Security fix on uploaded filenames
+		* Security fix on accountinfo
+		* Security fix on CSV filter import
+		* Security fix on URL parameters
+		* TVALUE field in devices table updated to TEXT
+
+2.12.2
+		* Add SNMP link tag configuration
+		* Improve CVE crontab
+		* Improve CVE process
+		* Improve IpDiscover display and loading
+		* Optimize TAG restriction loading
+		* Fix Ldap / SSO authentication 
+		* Fix wrong translation codes
+		* Fix error in ocsbase_new.sql
+		* FIx warning in IpDiscover
+		* Fix PHP warnings
+		* Fix computer detail configuration saving
+		* Fix group deployment percent
+		* Fix search on table name with more than 1 underscore
+		* Security fix in software categories name
+		* Security fix in SNMP export configuration
+		* Security fix in computer detail
+		* Security fix in ORDER BY direction
+		* Security fix on column name
+		* Security fix on password comparision
+
+2.12.1
+		* Add destroy session at the end of crontabs
+		* Add software index to improve performance
+		* Add reconciliation between IpDiscover and SNMP devices
+		* Update german translation
+		* Improve deployment stats message
+		* Improve CAS connection
+		* Improve SSO connection
+		* Fix launch deployment option
+		* Fix search on computer details deployment page
+		* Fix XSS in uploaded notification template
+		* Fix accountinfo field types
+		* Fix blank page when using SSO_ONLY
+		* Fix prevent use of quotes in admin data
+		* Fix CVE example file URL
+		* Fix package group query if group is empty
+
+2.12.0
+		* Add CVE search link
+		* Add settings to hide bios diagram on dashboard
+		* Add package deployment statistics on group page
+		* Add EXEC mode choice for linux bash script options in build package
+		* Add itmgmt_comments table to multisearch
+		* Add usb devices table in devices tab on computer details
+		* Add visual differenciation between active computers and archived computers
+		* Add no wrap text on server information if it is too long
+		* Add accountinfo type number
+		* Add crontab to clean orphan hardware_id
+		* Improve all software search filters
+		* Improve computer package deployment date format
+		* Improve all software crontab execution
+		* Improve crontab logs
+		* Improve software version
+		* Improve network scans
+		* Update empty-sql files
+		* Fix layouts not displaying for LDAP/CAS users
+		* Fix deployment end of line encoding for linux/macos
+		* Fix php-fpm 8.1 and php 8 warnings
+		* Fix import CSV in all software page if return of line is CR+LF
+		* Fix case sensitive schedule_wol tablename
+		* Fix advance configuration tab not hidden if is off
+		* Fix date format for Russian and Spanish translations
+		* Fix IpDiscover search function
+		* Fix SNMP multisearch
+		* Fix SNMP accountinfo
+		* Fix wrong collation being used for MariaDB
+		* Fix accountinfo type update
+		* Fix display of accountinfo value of type select,checkbox and radiobutton on multicriteria
+		* Fix require file path in all crontabs
+		* Fix notification execution
+		* Fix php warning on LDAP filters
+		* Fix all software count
+		* Fix checkbox not displayed in all computers
+		* Fix activation package if the port is in the URL
+		* Fix groups creation
+		* Fix hidden update agent teledeploy
+		* Fix accountinfo checkbox value with spaces
+		* Fix restrictive size of LDAP filter configuration fields
+		* Decode special html char &, < and >, except quotes to prevent SQL injection
+
+2.11.1
+		* Fix rename column syntax not supported by MySQL < 8 and MariaDB < 10.5.2
+		* Fix multisearch with is null operator
+		* Fix user display page
+
+2.11.0
+		* Add last inventory date in SNMP type
+		* Add migrate function to add lastdate column on existing SNMP type tables
+		* Add SNMP stats in dashboard (display only if SNMP is enabled)
+		* Add SNMP details page
+		* Add SNMP XML export on details page
+		* Add SNMP multisearch (display only if SNMP is enabled)
+		* Add CSV export all SNMP types
+		* Add administrative data for SNMP
+		* Add filter by OS / group / TAG / asset category in all software page
+		* Add filter by import computer name in CSV file in all software page
+		* Add right to manage saved searches
+		* Add manage layouts page
+		* Add layouts permissions in profile
+		* Add visiblity parameter to layout table (Only me / My group / All users)
+		* Add report notifications for static and dynamic groups
+		* Add all software count for restricted users
+		* Add tab for activated package in group page
+		* Improve and fix security
+		* Update traductions
+		* Update scheduledupdateagent.ps1
+		* Update ipdiscover date when peripherals updated
+		* Display the default DNS and gateway registered in hardware table in all computers page
+		* Get logged user for data entered in ipdiscover identified
+		* Fix adding new multisearch parameter after all software count redirection
+		* Fix wrong OR operator with is null in multisearch
+		* Fix generated query with doesn't contain parameter in multicsearch
+		* Fix multisearch condition for lock result
+		* Fix missing parenthesis with is null parameter in multisearch
+		* Fix user data display after delete profile
+		* Fix all computers replay in dynamic groups
+		* Fix MySQL error traduction in install.php
+		* Fix group dropdown in computer details
+		* Fix CVE vendor normalize
+		* Fix LDAP filter number not displayed correctly
+		* Fix double utf-8 encode for the software dropdown in software category
+		* Fix layout column index changed when create new computer admin data
+		* Fix empty inserted value in EXPORT_SEP parameter
+		* Fix wrong charset on some tables
+		* Fix php warnings
+		* Fix typo
+		* Remove useless function files
+		* Remove all old SNMP details pages
+		* Removed all "All Computers" layouts due to change in saved data structure
+
+2.10.0
+		* Add PHP8 compatibility
+		* Add layout feature
+		* Add archive/restore actions to GUI LOGS
+		* Add CAS connection feature
+		* Add custom interval configuration to Last Contact in dashboard
+		* Add plugin deployment for unix systems
+		* Add configuration to exclude archive machines from the interface
+		* Improve archive/restore feature
+		* Improve LDAP connection feature
+		* Improve Software category regex display
+		* Update password encryption
+		* Fix subnets loading taking to much time on login
+		* Fix activate package display for every language
+		* Fix archive/restore action
+		* Fix multisearch query if IS NULL operator
+		* Fix software category deletion
+		* Fix SNMP read mib files
+		* Fix save search group for LDAP and CAS users
+		* Fix rights on actions column
+		* Fix CVE 2021-46355
+		* Fix IpDiscover export
+		* Fix IpDiscover bugs
+		* Fix blank page after create networks type
+		* Remove overriding of profile rights on extensions pages
+
+2.9.2
+		* Add archive button on computer details page
+		* Add local import
+		* Add default type on SNMP
+		* Add default deployment protocol on configuration
+		* Add HARDWARE_ID field in netmap table
+		* Add missing primary keys
+		* Add cleanup of software related tables
+		* Improve SNMP feature (add multiple conditions)
+		* Improve SNMP v3
+		* Improve LDAP filter configuration
+		* Update software tables ID to BIGINT
+		* Fix ipdiscover not displaying data from server scans
+		* Fix check SSL configuration
+		* Fix subnet table display
+		* Fix custom theme
+		* Fix duplicates count after merging
+		* Fix inserting SNMP configuration with mib file
+		* Fix security issues
+		* Fix LDAP connection if default profil is empty
+
+2.9.1
+		* Add CVE by computer crontab
+		* Add CVE in computer details
+		* Add architecture column to softwares
+		* Add serial number to group table
+		* Add commented line to disable SSL verification on CVE cURL call
+		* Add software removal if not linked to any current hardware
+		* Improve update agent script from deployment
+		* Update Deutsh translation
+		* Update memory capacity to INT
+		* Fix admindata select type in multisearch
+		* Fix typo in French translation
+		* Fix MySQL reserved word conflict from upload file
+		* Fix real path from crontab
+		* Fix CVE links
+		* Fix duplicates
+		* Fix CVE computer version
+		* Fix IpDiscover identified networks
+		* Fix display select and checkbox accountinfo in computers per tag
+		* Fix multisearch wrong translation
+		* Fix update agent script compatibility with old powershell version
+		* Fix deployment success stats
+		* Fix MySQL 8 compatibility when deleting computers
+		* Fix special chars for LDAP password
+		* Remove redistribution from deployment
+		* Remove useless file ms_tele_package.php
+
+2.9
+		* Rework deployment feature
+		* Rework duplicates interface
+		* Add authentication security
+		* Add password security
+		* Add custom css for login page
+		* Add administrative data import via CSV
+		* Add crontab to populate all software page
+		* Add crontab to purge removed packages in history
+		* Add auto activation package
+		* Add IpDiscover scan from the server
+		* Improve CVE API call
+		* Update chinese translation
+		* Display special chars in datatable and CSV export
+		* Fix CVE bans
+		* Fix RCE from SNMP config
+		* Fix SQL injection from all computers
+		* Fix datetime multisearch field
+		* Fix Unix users inventory
+		* Fix CVE warning
+		* Fix case sensitive on accountinfo select type search
+		* Fix CVE regex
+		* Fix mysqli warning
+		* Fix checkbox visibility from static group
+		* Fix dictionary software order
+		* Remove package edition
+		* Remove accesslog from multisearch
+
+2.8.1
+
+		* Add IpDiscover purge configuration
+		* Add IpDiscover purge related translation
+		* Add IpDiscover purge crontab
+		* Add Unix users in computer details
+		* Add explicit error message during  SNMP type configuration
+		* Update ocsbase.sql for clean installation
+		* Update Spanish, Deutsh and Brazilian translation
+		* Authorized - and _ for login
+		* Fix role attribution especially when using memberof
+		* Fix multisearch for dynamic group
+		* Fix software displaying in dictionary
+		* Fix IpDiscover subnet list
+		* Fix IpDiscover form when inventory is not linked to a tag
+		* Fix reference link in CVE reporting
+		* Fix special characters for label and type on SNMP configuration
+		* Fix user table and removal
+		* Fix CVE regex matching
+		* Fix PHP warning
+		* Remove local ocs file import
+		* Remove old plugins manager page
+
+2.8
+		* Rework SNMP Interface and configuration
+		* Rework IPDiscover manager
+		* Rework LDAP Authenticaiton
+		* Rework Auth backend
+		* Rework software inventory data structure 
+		* Add MySQL 8 compatibility
+		* Add ASCII code management on deployment messages
+		* Add "is not empty" criteria on multi search
+		* Add computer archive feature 
+		* Add IPDiscover scan split by TAG
+		* Add CVE Matching regex
+		* Add chinese translation
+		* Add perl injector related inventory on main dashboard
+		* Update German translation
+		* Improve CVE Inventory
+		* Improve translation on deployment form
+		* Move networks submenu to inventory menu for better visibility
+		* Fix date interval search on multi criteria
+		* Fix IPDiscover subnet blacklist
+		* Fix CVE-2020-14947
+		* Fix stats to match user TAG restrictions
+		* Fix CSV export to match table show / hide configuration
+		* Fix minor bugs on CVE Inventory
+		* Fix deployment estimation time when editing a packaged
+		* Fix deployment fragment bug
+		* Fix small package deployment (< 1024 bytes)
+		* Fix a bug on MySQL SSL connection
+		* Remove SNMP_INVENTORY_DIFF
+		* Typos fix
+		* Minor bug fix
+
+2.7
+		* Add CVE reporting
+		* Add Web Application inventory
+		* Add Schedule Wake On lan
+		* Add saved searches on multicriteria
+		* Improve MySQL connection to add SSL connection and set alternative port
+		* Improve multicriteria to search by delay
+		* Bugs fix
+
+2.6
+		* Improve translations
+		* Plugin engine rework (see. http://wiki.ocsinventory-ng.org/10.Plugin-engine/Using-plugins-installer/)
+		* You can now edit deployment package without re-creating one from "inventory > activate"
+		* Improve software categorization to have more detailed criterias
+		* Add notifications system to have latest OCS Inventory News
+		* Rework login dashboard (better informations, dynamic group from the welcome page)
+		* Improve multi search engine introduced in 2.5
+		* Fix CSV problems on hostname export
+		* Migrate all tables to InnoDB
+		* Improve accountinfo display and edit
+		* Remove useless column in all software page
+		* Bugs fix
+
+2.6 RC
+		* Plugin engine rework (see. http://wiki.ocsinventory-ng.org/10.Plugin-engine/Using-plugins-installer/)
+		* You can now edit deployment package without re-creating one from "inventory > activate"
+		* Improve software categorization to have more detailed criterias
+		* Add notifications system to have latest OCS Inventory News
+		* Rework login dashboard (better informations, dynamic group from the welcome page)
+		* Improve multi search engine introduced in 2.5
+		* Fix CSV problems on hostname export
+		* Migrate all tables to InnoDB
+		* Improve accountinfo display and edit
+
+2.5
+		* Full rework on the multi-criteras engine, you can now query the whole database.
+		* Add software categorization, you can now put categories on softwares depending on regular expressions (see http://wiki.ocsinventory-ng.org/03.Management-console-and-its-advanced-features/Using-Software-Categorization)
+		* Assets categorization using the new multi-criterias search. (see http://wiki.ocsinventory-ng.org/03.Management-console-and-its-advanced-features/Using-Assets-Categorization)
+		* Mail notification system to have recurrent reports (see http://wiki.ocsinventory-ng.org/03.Management-console-and-its-advanced-features/Configure-mail-notification)
+		* Advanced configuration trigger to show more configuration informations.
+		* Dynamic group creation improvements
+		* Administrative data simplification
+		* Deployment stats improvements
+		* Front-end improvments
+		* Security fix ( Thanks to Jaume Llopis, Pablo Martínez and Juan Manuel Fernández from Tarlogic )
+		* Bugs fix
+
+2.4.1
+		* A theme has been created which allow you to add your custom CSS and images to our report. The documentation will be available soon.
+		* Some security fix has been made with the help from Simon Bieber and Michael Hermann, secuvera GmbH, Germany. You will find the detailed logs file in their security reports.
+		* OCSInventory is now translated in Czech.
+		* Some light fix bugs has been made on the interface and communication server.
+
+
+2.4
+		* Rest API
+		* Datatable search rework
+		* Complete rework on the old datetime picker
+    		* Add show / hide column functionality for software search
+    		* Machine details tabs will now follow the page and prevent user for scroll up for changing tab
+    		* Improve datatable informations visibility
+    		* Improve admin data visibility for read only profiles
+    		* Improve machine inventory workflow by adding a network tab on computers
+    		* Improve statistics management
+    		* Number of entries have been updated to show more entries
+    		* Add SSL support for plugin engine
+    		* Improve CSV export
+    		* Improve WOL function
+    		* Improve setup detection method
+    		* Minor bugs fix
+
+
+2.3.1
+		* Enhancement ocs reports :
+		* English translation update
+		* German translation update
+		* Japanese translation update
+		* Pt-br translation update
+		* Update dashboard's message page
+		* Update notes form display
+		* Update all software search to be more ergonomic
+		* Remove some old glyphicons
+		* Remove unused libraries
+		* Add custom sort feild on web service soap
+		* Update Ocsinventory.pm to manage non utf8 char
+		* Add hash management to prevent crash on incorrect inventory data
+		* Fix bugs
+
+2.3
+		* A complete rework using the bootstrap framwork has been done to improve design and responsivity
+		* We improved all the inventory data readability
+		* Tables now save your sorting orders / number of entries
+		* We updated icons and images to the new graphics chart
+		* Japanese language now supported officiel ( thus some translation may be missing, feel free to contribute )
+		* We added a option to force inventory on the machine startup for windows agent ( disabled by default )
+		* We also added a option which display a message if a new ocsinventory version is available.
+		* We improved all the user / profile management system
+		* The new console is now fully compatible with php7
+		* All libraries has been updated
+		* We cut off all the dead code to improve readability and contribution ease for developers
+		* Fix bug
+
+2.2
+		* New plugin system with automatic installation
+		* New plugin API created in order to modify create or modify OCS element easly.
+		* Cosmetic fix on computer menu.
+		* Packet system rework, use of the new class ziparchive (Thx to paul)
+  		* Redistribution server are now working correctly
+  		* Workflow feature has been removed
+		* Ldap Configuration is now working ( Was broken in 2.2B1 )
+		* Fix a bug which throw an error on PHP 5.5+
+		* function_ipdiscover.php has been modified for handling new oui.txt files (thx to paul)
+		* All arrays now have a saving feature which permits to save order and column config (thx to paul)
+		* Cosmetic fix for large screen
+		* Cosmetic fix on the config menu (input overflow)
+
+2.2beta1
+		* hide alert messages
+		* new install file
+		* Migrate menus, urls and js config to XML files
+		* Add new menu for computer sections
+		* Add new menu for main sections
+		* Add update methode
+		* Add password version
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1342210
+
+2.1.1
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1283089
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1277904
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1086324
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1260764
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1266229
+
+
+2.1
+		* add DEVICEID field on sim tables
+		* add virtual machines info on snmp details
+		* add news fields for printers
+		* active alert messages on GUI for sadmin profil
+		* fix LDAP bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/915301
+		* fix bug on WOL
+		* delete @ for ldap errors
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1019060. Delete registry cache where delete a key
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1023436 (cosmetic)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/612966 (lock/unlock GUI)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/806035 (ipdiscover)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1250428 (ldap case sensitive)
+		* add osversion column for multisearch => https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/905544
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/772680 (ocsbase.sql admin/ladmin)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/806850 (ipdiscover id)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/807406 (ipdiscover sort percentage)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/931373 (administrative data search)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1240166 (bug on groups search)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1091580 (accountinfo checkboxes)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1152596 (vm relation to host)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/924756 (uppercase letters in console)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1168382 (ugly computer details when more then 3 ip addresses)
+		* verify if directory of redistribution server exist
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1011531 (delete redistribution packages on disk)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/1051850 (no computer name in csv export of duplicates)
+		* Add an example for plugin (how to develop one)
+
+2.1RC1
+		* active SNMP V3
+		* change info on processor on computer details
+		* add pda info on computer details
+		* fix bug on accountinfo (with uploadfile>64ko)
+		* add advanced options for teledeploy
+		* change ocs logo
+		* add wake on lan on computer
+		* add wake on lan on multi search
+		* Remove Support 
+		* add SNMP field to scan multi networks
+		* Add QRcode on accountinfo
+		* Add architecture field
+		* fix bug on softwares detail on computer
+		* sort categories on dictionary
+2.0.6
+		* fix security vulnerability => Cross site request forgery
+		* fix utf8 problem
+		* add link on dico ignore
+		* fix bug on menu (http://forums.ocsinventory-ng.org/viewtopic.php?pid=49125)
+		* fix bug on export data on all_soft
+		* add oscomment field on tab
+
+2.0.5
+		* Add logs directory on sql files
+		* fix Warning on function_config_generale.php for PHP 5.4. 
+		* fix security bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/963229
+		* fix security bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/963017
+		* fix bug on package's group - Tx to FactorFx.
+		* fix cas library - use system library
+		* fix warning on natcasesort function. tx to Remi for this patch
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/940370 (redistribution group)
+
+2.0.4 
+		* fix a part of this bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/907755 (show computers name on csv export)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/918085
+		* fix bug on menu by profil
+		* on deployment statistics, merge EXIT_CODE_% with ERROR.
+		* add LDAP group merbership lookups.(http://forums.ocsinventory-ng.org/viewtopic.php?pid=45215)
+		* fix http://forums.ocsinventory-ng.org/viewtopic.php?pid=45331#p45331
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/893463
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/902510
+		* You can add snmp communities with the same name with different version
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/878166
+		* sort all select list
+		* utf8 patch : http://forums.ocsinventory-ng.org/viewtopic.php?pid=43927#p43927
+
+2.0.3
+		* security fix: https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/884340 (XSS)
+		* security fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/884273
+		* security fix for snmp https://bugs.launchpad.net/ocsinventory-server/+bug/881406
+		* use CONF_MYSQL 
+		* patch from remi to upgrade 1.3.* to 2.* (to save old values  dbconfig.inc.php)
+ 		* fix: add computer's name on delete popup
+		* security fix (CVE-2011-4024) - more flexible (UTF8 correction)
+2.0.2
+		* add bios date on all computers and sort on date
+		* fix for security alert tx to Nicolas DEROUET (CVE-2011-4024)
+		* fix bug on "Machines not see since more of x day(s)" see http://forums.ocsinventory-ng.org/viewtopic.php?pid=43148#p43148
+		* fix bug on accountinfo filter (http://forums.ocsinventory-ng.org/viewtopic.php?pid=43061#p43061)
+		* update polish language file. tx to Piotr Adamcio
+		* fix bug on softwares detail on computer
+		* sort categories on dictionary
+2.0.1
+		* fix bug on order by ip addresses (http://forums.ocsinventory-ng.org/viewtopic.php?pid=42066)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/842809
+		* configure the defaut number result by page
+		* add message for max_allowed_packet MySQL conf
+		* fix logout of CAS connexion (http://forums.ocsinventory-ng.org/viewtopic.php?pid=41923#p41923)
+		* fix bug on package search
+		* show macaddress info and fix bug on link.
+		* delete jpgraph and fusionCharts librairies. Now we use elycharts librairie (http://elycharts.com) 
+		* fix http://forums.ocsinventory-ng.org/viewtopic.php?pid=41775#p41775 and use language files 
+		* add a query condition to display icon (computer's details)
+		* delete verdana font
+		* add error message when max_allowed_packet (mysql configuration) is smaller than the file sent 
+		* fix bug: use separator for column name on export file
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/807412
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/814050
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/825333 (can see group's detail from computer's detail)
+		* Fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/825332
+		* fix default language to english (https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/824434)
+		* fix bug on add/delete computors in a group for restricted profil.
+		* FIX: unable to search LDAP from root of tree http://forums.ocsinventory-ng.org/viewtopic.php?pid=38310#p38310
+		* add export XML inventory
+		* add plugins options
+		* change delete computers function (no orphans on plugins tables)
+		* https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/812861
+		* add possibility to show mac address on "all computers".
+		* Add checkbox to delete few computers.
+		* https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/806040
+		* https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/810990
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/810001 (add EXIT_CODE on stats)
+		* fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/788624 (search on the value checkbox)
+		* fix bug https://bugs.launchpad.net/bugs/807432 (ipdiscover)
+		* add new fields on snmp_loadbalancers table
+		* fix bug on ipaddress search
+		* force not strict mysql mode and utf8 format on backend connexion
+		* can delete computers on ms_doubles.php page
+		* use type tables (softwares, field => NAME, VERSION). Enhance request time	
+		* active invisible package on teledeploy
+		* fix bug on "user can't update accoutinfo" option. see http://forums.ocsinventory-ng.org/viewtopic.php?pid=39592#p39592
+		* update german language file. Tx to dilldappe
+		* fix bug on console. Add restriction for limited ocs user
+		* fix bug on css/ocsreports.css (http://forums.ocsinventory-ng.org/viewtopic.php?pid=38872#p38872)
+		* fix bugs on details groups checklist. (static exclu/inclu)
+		* you can create a dynamic group without computer
+		* fix bug on old groups
+		* fix bug on ipdiscover detail filter
+		* fix bug on console (link to multisearch)
+		* fix bug on mysql_insert_id
+		* add '-' and '_' to sql fields
+		* add serial number of memories
+		* fix bug on delete package when status="ERR_"
+		* activate security messages
+		* fix bug 781220 (sql request on groups)
+
+
+2.0 
+		* if you change configuration => reload all values for your session
+		* activate support
+		* fix bug on export soft and all soft page (diplicate data)
+		* add cache for console page
+		* active stat on ms_tele_activate.php
+		* change msg_* logs => log only msg_error
+		* fix bug on xampp installation on windows http://forums.ocsinventory-ng.org/viewtopic.php?id=8228
+		* fix bug on SSO authentification
+		* launch config.txt for computers details and snmp details only one time by session
+		* the number of pages is saved in session/cookies
+		* fix bug on update old accountinfo (date format => varchar(10))
+		* fix bug #767032
+		* fix bug #771669 if you have multiple table on a page, you can sort each column of each table
+		* reload page when you add a new tab (accountinfo)
+		* encode info file with xml encode
+		* add messages when you add a profil and verify if you can create/delete a profil
+		* fix double in the list of computers 
+		* add choise on repart tags page
+		* add slashes on command to info file (teledeploy)
+		* force SQL format for new accountinfo and new field in wk of teledeploy
+		* add option to profil => authorize or not the removal of computers
+		* check if accountinfo field exist when you see computer details
+		* fix this pb: http://forums.ocsinventory-ng.org/viewtopic.php?pid=36161  field name => uppercase and no space
+		* You can access to computer admin info if you admin his subnet
+		* fix Bug #761523 (export data)
+
+2.0 rc4
+		* fix bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/666124
+		* fix bug on groups message (console)
+		* fix problem with tags value (if you customised your identification)
+		* if SSO connexion, don't show deconnect button
+		* fix bug on search with calendar http://forums.ocsinventory-ng.org/viewtopic.php?id=7980
+		* fix bug Bug #744241 (add accountinfo on duplicates screen)
+		* fix bug on wk of telediff => you can affect a package only if IT_SET_NIV_% are ok
+		* fix bug on computer details => if serial number == 0 you can blacklist it.
+		* fix bug on blacklist serial => you can add new serial to blacklist
+		* add accountinfo on groups show
+		* update italian file //tx to Passero
+
+2.0 rc3
+		* active cache mode on GUI
+		* add vm on computers views
+		* change look and feel on install.php
+		* Add constants in var.php
+		* fix Bug #725466 
+		* fix bug http://forums.ocsinventory-ng.org/viewtopic.php?pid=34495#p34495
+		* fix bug on export csv
+		* fix bug on ipdiscover (shows all the subnets even if no machine is elected)
+		* fix Bug #726532 (Duplicate manager report duplicate devices)
+		* change LOCAL_SERVER and LOCAL_PORT to LOCAL_URI_SERVER.
+		* add plugin functionality on stats page
+		* fix bug on group show
+ 		* use mysql2_query_secure function in function_groups.php
+		* Fix Bug #727267 (admin ipdiscover)
+		* Fix Bug #726516 (accountinfo problems)
+		* fix bug on ipdiscover => update name
+		* fix bug on activation.
+		* add ipdiscover analyse if you have ipdiscover-util.pl.
+		* update oui.txt
+		* add demo mode
+		* update wk of teledeploy (more user friendly)
+		* force sql mode not strict
+		* change REVALIDATE_FROM INT(11) DEFAULT 0 (bug for revalidate groups)
+		* add xml header in info files
+		* add filter on stats
+
+2.0 rc2
+		* Add "show all computer detail"
+		* Add "show all" option in all table 
+		* Fix bug on packet activation.
+		* Add reference field on snmp cards details .
+		* fix bug on package activation (force to http and https)
+		* Fix bug => activate a package on servers groups
+		* Fix bug when creating a package. Nb frag can be egal to 0
+		* fix bug on redistribution servers group
+		* fix bug on computer configuration when no group exist
+		* fix display bug on ms_custom_pack.php
+		* Fix bug on multi search
+		* Use language files on groups details
+		* Fix bug on cookies (columns tab)
+		* Fix bug on teledeploy workflow. You can delete your fields
+		* Fix problem with activation (Bug #704073)
+		* add bios type to multi search
+		* update language files
+		* Fix bug on many browsers on multi search (bug 694939)
+
+
+2.0 rc1
+        * Delete doc of jpgraph and fusionCrartsFree
+        * Add graph with jpgraph librarie
+        * Fix bug on accountinfo snmp
+        * Change LINUX to UNIX/LINUX in package creation page
+        * New version of all_soft page
+        * Fix warning in html_header.php
+        * Add message if directory not exist.
+        * Fix bug: use a special name var for msg info in html_header
+        * Fix DOCUMENT_REAL_ROOT bug
+        * Add IT set management light. Configuration and details of computer are done. Next step: search on these new fields
+        * Show directory of 4all_config.txt
+        * Add some stats
+        * Fix language bug on database
+        * Choose your directory for your profils config files, old config file
+        * Fix bugs on function_table_html.php
+        * New graph for teledeploy speed
+        * Add FusionChartsFree for graphs 
+        * Add functionality: UTF8 for new databases
+        * Create new database on UTF8 format
+        * If database UTF8 format => only ocsbase_new.sql
+        * New plugin system: you can now create your own plugins easily	
+        * Add .xml to local import
+        * Add old page for redistribution servers
+        * Delete print option and show all
+        * Add avaailibility to see all your subnet and you can blacklist subnet in ipdiscover
+        * You can now configure blacklist in /backend/ipdiscover/methode/local.php
+        * Rename config.txt for snmp and computer detail
+        * Using mysql2_query_secure now
+        * Add new option: tabcache => GUI tables cache
+        * Reset all tab cache
+        * Show SNMP data
+        * Add snmp functionality for a computer or a group
+        * Update for french file
+        * Use dbname=ocsweb by default if dbname doesn't exist
+        * Fix bugs on notes (computers infos)
+        * Add script to update your accountinfo 1.x.x.x => 2.x.x.x
+        * Add fields on multisearch 
+        * Add fields on softwares table GUID, LANGUAGE, INSTALLDATE et BITSWIDTH
+        * Add COMMENTS and VERSION fields
+        * Reload the origin page when you update config/teledeploy values
+        * Use LDAP for identify and connect on ocsreports.
+        * Add title to ipdiscover page.
+        * Add workflow for teledeploy
+        * New version of local import and manage your ocs clients
+        * Fix https://bugs.launchpad.net/bugs/685581 (thanks to Passero)
+        * New version of client injector
+        * Fix link bug on multi search (thnaks to Damien)
+        * New version of label
+        * Add Copyleft on php pages
+        * Fix bug: delete table cache when you clic on icon menu
+        * Various patches from Adam Buchbinder
+        * Various patches from Passero 
+        * Add snmp tab on snmp details
+        * Fix utf8 bugs 
+        * Force utf8 format
+        * Fix bug on teledeploy activation => use config values when exist
+        * Format all data in UTF8 when it's necessary (thanks to Damien)
+        * Fix bug on groups: use the function to delete a group
+        * Add : select database name in install.php
+        * Disable option INVENTORY_VALIDITY
+        * Fix bug when you delete a snmp item
+        * Force SNMP_DIR value + small fix
+        * News sections in snmp details
+        * Add SNMP_INVENTORY_DIFF on config table
+        * New xml format for snmp communities
+        * Add your complex accountinfo on snmp data 
+        * Add CAS authentification (thanks to FranciX contribution http://forums.ocsinventory-ng.org/viewtopic.php?pid=30974)
+        * Fix field sort bugs
+        * Fix bug https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/649575 (thanks to Passero)
+        * Use complex tag for snmp data
+        * Add availibility to configure separator when you export file
+        * Various Italian translations (thanks to Passero)
+        * Fix Bug 658107 : https://bugs.launchpad.net/bugs/658107 (thanks to Pieroliste)
+        * Administrate your snmp community
+        * New version of snmp communities
+        * Fix bug 654645
+        * Add snmp functionality for a computer or a group
+        * Show all double even when it is equal to 0
+        * Use standard function for messages
+        * Fix bug: https://bugs.launchpad.net/bugs/637839 (thanks to Passero)
+        * Fix bug: https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/637834
+        * Blacklist your subnet for ipdiscover
+        * Use new icons and new alert msg.
+        * Enhance ocs profiles manangement (new, update, delete)
+        * Fix bug on group's cache
+        * Replace function ereg_replace (DEPRECATED) by str_replace 
+        * Fix groups cache bug : http://forums.ocsinventory-ng.org/viewtopic.php?pid=29648 (thanks to cedric67). When you remove computers, they were not removed from the groups cache
+        * Add subnet blacklist
+        * Fix bug on all computers => you can delete a computer now (thanks to Zefox)
+        * Fix bug on ipdiscover : if subnet uid == 0 + you can modify a type
+        * User can see statistic of déployment (only for his computers)
+        * Add SNMP option on configuration
+        * Fix bugs with mac addresses
+        * Fix bug on workflow telediff: When deleting a field due to orphaned data in tables (thanks to Zefox)
+        * Fix bug: tag can't be updated (thanks to Guillaume Priou)
+        * Fix bug: https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/611160 (thanks to Passero)
+        * Add logs when someone try to connect (accept or failed )
+        * Fix bug: when you use filter on table, now, you use new function for mysql query (mysql2_query_secure)
+        * If no status is active, displays only status tab
+        * Fix bug with tag column
+        * Use tab_modif_values function to add a new static group
+        * Fix bug: you can update and post request deployment
+        * Fix: add message when status is updated + keep the values sent when error was detected (thanks to Zefox)
+        * Fix bug: generate table cache if requete and arg are new (mysql2_query_secure) (thanks to Zefox)
+        * Delete exactly in select when this is a date (thanks to frankb)
+        * Use mysql2_query_secure and add a new config function for admin user groups
+        * Use new accountinfo in multi search: http://forums.ocsinventory-ng.org/viewtopic.php?id=6476 (Thanks to teone)
+        * Fix bug: https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/...
+        * Add search on STORAGES table + more details on cd_storages
+        * Add ASSETTAG on search & on computer_detail
+        * Fix bug: https://bugs.launchpad.net/bugs/602234
+        * Add search on complex accountinfo
+        * Move a field only if you have rights
+        * Use mysql2_query_secure
+        * Fix bug: don't remove the backslashes in the address registr...
+        * Add new order in accountinfo_config table when a new accoutinfo is post.
+        * Add radio button on tag config
+        * You can now modify the lbl of a tab (accountinfo)
+        * Add radio button for tag
+        * Fix https://bugs.launchpad.net/ocsinventory-ocsreports/+bug/597682
+        * New accountinfo page
+        * Fix bug with old cookies when you update OCSREPORT (thanks to Remi Collet)
+        * Fix bad column name on ocsbase.sql in downloadwk_pack table
+        * Various patches from JOF300
+        * Various patches from Pierfrancesco Passerini 
+        * New OCS plugin: simplify research on existing software on the computer equipment. You can print the list of results 
