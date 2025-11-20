@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+a2enconf z-ocsinventory-server.conf
+a2enconf zz-ocsinventory-restapi.conf
+
+chown -R www-data: /etc/ocsinventory-server/*
+
+systemctl restart apache2
+
+chown -R www-data: /var/log/ocsinventory-server
+exit 0

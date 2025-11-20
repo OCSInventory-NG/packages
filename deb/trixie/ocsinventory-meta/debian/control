@@ -1,0 +1,19 @@
+Source: ocsinventory
+Section: ocsinventory
+Priority: main
+Maintainer: Rudy Laurent <rudy.laurent@factorfx.com>
+Build-Depends: debhelper (>= 7.0.50~)
+Homepage: https://www.ocsinventory-ng.org/
+
+Package: ocsinventory
+Architecture: all
+Recommends: dmidecode, hdparm, pciutils
+Suggests: nmap, smartmontools, read-edid
+Depends: ocsinventory-server (>= 2.10.0), ocsinventory-reports (>= 2.10.0)
+Description: Hardware and software inventory tool (communication server, webconsole and database)
+ Open Computer and Software Inventory Next Generation is an
+ application designed to help a network or system administrator to
+ keep track of the hardware and software configurations of computers
+ that are installed on the network.  It also allows deploying
+ software, scripts and files on client computers.
+ . This package contains the server part.
