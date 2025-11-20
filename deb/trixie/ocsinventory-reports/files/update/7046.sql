@@ -1,1 +1,0 @@
-DELETE FROM `config` WHERE NAME = 'TMP_DIR';
