@@ -61,7 +61,7 @@ binary :
 		-e "s;DATABASE_PORT;3306;g" \
 		-e "s;VERSION_MP;2;g" \
 		-e "s;PATH_TO_LOG_DIRECTORY;$(_localstatedir)/log/ocsinventory-server;g" \
-		-e "s;APACHE_AUTH_USER_FILE;$(_sysconfdir)ocsinventory-server/htpasswd;g" \
+		-e "s;APACHE_AUTH_USER_FILE;$(_sysconfdir)/ocsinventory-server/htpasswd;g" \
 		-e "s;PATH_TO_PLUGINS_CONFIG_DIRECTORY;$(_sysconfdir)/ocsinventory-server/plugins;" \
 		-e "s;PATH_TO_PLUGINS_PERL_DIRECTORY;$(_sysconfdir)/ocsinventory-server/perl;" \
 		etc/ocsinventory/ocsinventory-server.conf \
